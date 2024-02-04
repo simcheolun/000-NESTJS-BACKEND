@@ -1,0 +1,129 @@
+*** npm install -g @nestjs/cli@7
+
+npm install  @nestjs/cli@7 --save
+
+
+-2-
+*** lodash install & tsconsig.json config
+npm i lodash
+"esModuleInterop": true   // nest new ./로 새로운 프로젝트 생성후  tsconfig.json에 추가
+
+-3-
+*** 같은 코드를 없애고 상속 사용
+npm i @nestjs/mapped-types
+
+-4-
+*** 타입오알엠 마이에스큐엘 설치
+npm i @nestjs/typeorm typeorm mysql2   ///   install --npmsave @nestjs/typeorm@7.x typeorm
+
+
+-5-
+*** 
+npm i @nestjs/config  비번등등 캡슐화
+
+-6-
+*** Auth는 2가지로 나눔-> Authentication 인증,  Authorzation 승인
+npm i @nestjs/jwt
+
+
+-7- 
+*** 캐시매니저 서버에 캐싱을 사용하여 상습적인 데이터 요청에 사용함.
+*** app.module.ts사용함.
+npm i cache-manager
+npm i -D @types/cache-manager  /// npm install --save-dev @types/cache-manager@^3.4.3
+
+-8-
+*** 엔티티, 컬럼, 관계 등의 이름을 자동으로 변환해주는 라이브러리
+npm install typeorm-naming-strategies
+
+
+-9- 
+*** 업로드
+; npm install --save @nestjs/platform-express multer
+혹은 
+npm install --save @nestjs/platform-express@7.0.0 multer@1.4.2
+npm i -D @types/multer
+
+
+-10-
+npm install chalk
+*** console.log 의 생상설정
+
+-11-
+npm i --save helmet
+*** 요청제한부분
+
+-12-
+nest g resource LoginByInventory
+*** 해싱 및 검증 라이브러리 
+
+
+-888-
+*** 업그레이드 error TS2694: Namespace '"D:/work/NetJs7x/node_modules/@types/estree/index"' has no exported member 'PrivateIdentifier'. 문제발생
+npm install --save-dev @types/estree@latest
+
+-999- 999번은 나중에 설치해야 오류 발생할 이슈가 없음.
+*** nest.js 에서는 모든 데이터들은 Dto(data transfer object) 을 통해 운반됩니다.
+npm i class-validator class-transformer
+
+
+
+
+*** 새로운 폴더 생성후 현재 폴더에 새로운 네스트 프로젝트생성
+nest new ./
+
+***  모듈 생성
+nest g mo board
+
+*** 컨트롤러 생성
+nest g co board
+
+*** 서비스 생성
+nest g s board
+
+
+
+npm install --save @nestjs/swagger@4 설치됨. 삭제 필요.
+
+npm install --save dotenv  // .env구성
+
+
+엔티티에서 transformer: new BigIntTransformer() 문 사용시 
+this.SalesProductInfoRepository.findOne( ... ) 문 실행하면 
+"Do not know how to serialize a BigInt" 오류발생함
+
+
+
+ DATABASE_HOST="localhost"
+ DATABASE_PORT=3306
+ DATABASE_USERNAME="root"
+ DATABASE_PASSWORD="car008mysqlpasswd@!@"
+ DATABASE_NAME="car008"
+ JWT_SECRET='008parts_sw$K3zPg'
+
+ DATABASE_HOST="localhost"
+ DATABASE_PORT=3306
+ DATABASE_USERNAME="root"
+ DATABASE_PASSWORD="car008mysqlpasswd@!@"
+ DATABASE_NAME="008back"
+ JWT_SECRET='008parts_sw$K3zPg'
+
+Zhe#!Yun$@1977%#
+ DATABASE_HOST="test.car008.kro.kr"
+ DATABASE_PORT=3306
+ DATABASE_USERNAME="car008"
+ DATABASE_PASSWORD="car008test"
+ DATABASE_NAME="car008"
+ JWT_SECRET='008parts_sw$K3zPg'
+
+
+ DATABASE_HOST="car008.kro.kr"
+ DATABASE_PORT=3306
+ DATABASE_USERNAME="car008"
+ DATABASE_PASSWORD="car008mysqlpasswd@!@"
+ DATABASE_NAME="car008"
+ JWT_SECRET='008parts_sw$K3zPg'
+
+
+
+

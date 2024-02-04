@@ -13,7 +13,7 @@ export class StorageInfoRepository extends Repository<StorageInfoEntitySlave>{
     super(StorageInfoEntitySlave, dataSource.createEntityManager());
   }
 
-  async read(params: searchParams, loginUserInfo: any) {
+  async getStorageInfo(params: searchParams, loginUserInfo: any) {
     const { objSearchMapper, page, size } = params
     let { searchKeyword, state } = objSearchMapper
     const take = size || 10;
@@ -21,9 +21,8 @@ export class StorageInfoRepository extends Repository<StorageInfoEntitySlave>{
     let queryBuilder = this.createQueryBuilder('storageInfo')
       .select("storageInfo") // 테이블이름
       .where('storageInfo.companyId = :companyId', { companyId: loginUserInfo.companyId })
-      .leftJoinAndSelect("storageInfo.companyInfo", "companyInfo", "companyInfo.seq = storageInfo.companyId")
+      // .leftJoinAndSelect("storageInfo.companyInfo", "companyInfo", "companyInfo.seq = storageInfo.companyId")
       .orderBy("storageInfo.seq", "DESC") // 내림차순정열
-
     if (searchKeyword) {
       queryBuilder = queryBuilder.where(new Brackets(qb => {
         qb.where(`

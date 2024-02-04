@@ -16,7 +16,7 @@ export class StorageInfoService {
   ) { }
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# READ
   async getStorageInfo(params: searchParams, loginUserInfo: any) {
-    return await this.StorageInfoRepository.read(params, loginUserInfo);
+    return await this.StorageInfoRepository.getStorageInfo(params, loginUserInfo);
   }
   // CREATE #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
   async setStorageInfo(info: any, loginUserInfo: any) {

@@ -23,8 +23,7 @@ class BigIntTransformer implements ValueTransformer {
     }
 }
 
-@Entity({database:'car008', schema: 'car008', name: 'storage_info' })
-
+@Entity({database:'car008', schema: 'master', name: 'storage_info' })
 export class StorageInfoEntityMaster {
     @PrimaryGeneratedColumn({ type: 'bigint', name: 'seq' }) seq: number;
     @Column({ type: 'bigint', name: 'sn' }) sn: bigint;
@@ -55,6 +54,8 @@ export class StorageInfoEntityMaster {
         };
     }
 }
+
+@Entity({database:'car008', schema: 'slave', name: 'storage_info' })
 export class StorageInfoEntitySlave {
     @PrimaryGeneratedColumn({ type: 'bigint', name: 'seq' }) seq: number;
     @Column({ type: 'bigint', name: 'sn' }) sn: bigint;

@@ -1,0 +1,35 @@
+슬레이브 MYSQL서비스실행
+
+마스터 / 슬레이브 설정 
+CREATE USER 'sim_user'@'%' IDENTIFIED BY 'car008mysqlpasswd@!@';
+GRANT REPLICATION SLAVE ON *.* TO 'sim_user'@'%';
+FLUSH PRIVILEGES;
+
+확인:
+show grants for 'sim_user'@'%';
+
+
+UUID재설정  /data/auto.cnf삭제하면 새롭게 생성됨
+reset master;
+reset slave;
+
+show master status;
+
+슬레이브수정
+
+mysql > stop slave;
+mysql > reset slave;
+CHANGE MASTER TO
+  MASTER_HOST='192.168.0.6',
+  MASTER_USER='sim_user',
+  MASTER_PASSWORD='car008mysqlpasswd@!@',
+  MASTER_PORT=3306,
+ MASTER_AUTO_POSITION = 1;
+mysql > start slave;
+
+
+모든 정보 삭제
+DROP USER 'sim_user'@'%';
+FLUSH PRIVILEGES;
+
+

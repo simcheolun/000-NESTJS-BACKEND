@@ -1,0 +1,13 @@
+새로운
+echo "# 000-NESTJS-BACKEND" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/simcheolun/000-NESTJS-BACKEND.git
+git push -u origin main
+
+기존
+git remote add origin https://github.com/simcheolun/000-NESTJS-BACKEND.git
+git branch -M main
+git push -u origin main

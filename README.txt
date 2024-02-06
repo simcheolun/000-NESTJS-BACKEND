@@ -5,3 +5,9 @@ FLUSH PRIVILEGES;
 
 
 SHOW GRANTS FOR 'car008'@'115.95.188.130';
+
+
+
+CREATE USER 'car008'@'localhost' IDENTIFIED BY 'your_password';
+GRANT GRANT OPTION ON *.* TO 'your_user'@'localhost';
+FLUSH PRIVILEGES;

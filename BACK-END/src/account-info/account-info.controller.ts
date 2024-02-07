@@ -64,7 +64,7 @@ export class AccountInfoController {
   // @ApiBody({ type: CreateAccountInfoDto })
   @Post('/LoginByInventory')
   async LoginbyInventory(@Body() params: any, @Ip() ip: any) {
-    return await this.accountInfoService.LoginbyInventory(params, ip);
+    // return await this.accountInfoService.LoginbyInventory(params, ip);
   }
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
   @Post('/getAccountInfo')

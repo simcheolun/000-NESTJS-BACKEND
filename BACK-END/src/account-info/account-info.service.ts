@@ -5,6 +5,7 @@ import { createSN, returnJSONSingle } from 'src/Auth/custom.function';
 import { AccountInfoRepositoryMaster, AccountInfoRepositorySlave } from './account-info.repository';
 import { AccountInfoEntityMaster, AccountInfoEntitySlave } from './entities/account-info.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AccountInfoService {
@@ -14,11 +15,13 @@ export class AccountInfoService {
     // @InjectRepository(AccountInfoEntityMaster)
     private AccountInfoRepositoryMaster: AccountInfoRepositoryMaster,
     @InjectRepository(AccountInfoEntitySlave, 'SLAVE')
+    // private AccountInfoRepositorySlave: Repository<AccountInfoEntitySlave>,
     private AccountInfoRepositorySlave: AccountInfoRepositorySlave,
     private ZRedisService: ZRedisService,
   ) { }
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# READ
   async getAccountInfo(params: any, loginUserInfo: any) {
+    console.log(this.AccountInfoRepositorySlave.metadata)
     const master = await this.AccountInfoRepositoryMaster.findOne({where:{}})
    const slave =  await this.AccountInfoRepositorySlave.findOne({where:{}})
    return {master,slave}

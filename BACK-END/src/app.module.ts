@@ -14,9 +14,9 @@ import { APP_GUARD, } from '@nestjs/core';
 import * as redisStore from 'cache-manager-ioredis'
 import { typeOrmConfig } from './Auth/typeorm.config';
 
-import { StorageInfoModule } from './storage-info/storage-info.module';
 import { ZRedisModule } from 'z-redis/z-redis.module';
 import { AccountInfoModule } from './account-info/account-info.module';
+import { TestModule } from './test/test.module';
 
 
 // bigInt 이슈
@@ -61,9 +61,9 @@ import { AccountInfoModule } from './account-info/account-info.module';
     // 각 모듈 주입  
     ZRedisModule,
     
-    StorageInfoModule,
-    
     AccountInfoModule,
+    
+    TestModule,
   ],
 
   controllers: [AppController,],

@@ -20,4 +20,11 @@ import { AccountInfoRepositoryMaster, AccountInfoRepositorySlave } from './accou
     ZRedisService,
   ]
 })
-export class AccountInfoModule {}
+export class AccountInfoModule {
+  constructor(){
+    // const master :any =(TypeOrmModule.forFeature([AccountInfoEntityMaster]))
+    // console.log(master.providers[0])
+    // const slave :any =(TypeOrmModule.forFeature([AccountInfoEntitySlave]))
+    // console.log(slave.providers[0])
+  }
+}

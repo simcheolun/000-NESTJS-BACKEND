@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ZRedisService } from 'z-redis/z-redis.service';
 import { createSN, returnJSONSingle } from 'src/Auth/custom.function';
 import { AccountInfoRepositoryMaster, AccountInfoRepositorySlave } from './account-info.repository';
-import { AccountInfoEntitySlave } from './entities/account-info.entity';
+import { AccountInfoEntityMaster, AccountInfoEntitySlave } from './entities/account-info.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -11,15 +11,17 @@ export class AccountInfoService {
   cacheName = 'StorageInfoService'
 
   constructor(
-    @InjectRepository(AccountInfoEntitySlave, 'SLAVE')
+    // @InjectRepository(AccountInfoEntityMaster)
     private AccountInfoRepositoryMaster: AccountInfoRepositoryMaster,
+    @InjectRepository(AccountInfoEntitySlave, 'SLAVE')
     private AccountInfoRepositorySlave: AccountInfoRepositorySlave,
     private ZRedisService: ZRedisService,
   ) { }
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# READ
   async getAccountInfo(params: any, loginUserInfo: any) {
-    console.log(await this.AccountInfoRepositoryMaster.findOne({where:{}}))
-    return await this.AccountInfoRepositorySlave.getAccountInfo(params, loginUserInfo);
+    const master = await this.AccountInfoRepositoryMaster.findOne({where:{}})
+   const slave =  await this.AccountInfoRepositorySlave.findOne({where:{}})
+   return {master,slave}
   }
   // update #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
   async setMyInfo(params: any, loginUserInfo: any) {

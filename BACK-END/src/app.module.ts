@@ -35,7 +35,7 @@ import { AccountInfoModule } from './account-info/account-info.module';
     }),
     // 다중Database연결
     TypeOrmModule.forRootAsync({
-      name: 'SLAVE', // 이름 지정
+      name: 'SLAVE',
       useFactory: (configService: ConfigService) => typeOrmConfig('SLAVE'),
       inject: [ConfigService],
     }),
@@ -61,7 +61,7 @@ import { AccountInfoModule } from './account-info/account-info.module';
     // 각 모듈 주입  
     ZRedisModule,
     
-    // StorageInfoModule,
+    StorageInfoModule,
     
     AccountInfoModule,
   ],

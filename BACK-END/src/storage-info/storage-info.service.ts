@@ -5,6 +5,7 @@ import { searchParams } from './search.params';
 import { StorageInfoRepository } from './storage-info.repository';
 import { ZRedisService } from 'z-redis/z-redis.service';
 import { createSN, returnJSONSingle } from 'src/Auth/custom.function';
+import { AccountInfoRepositorySlave } from 'src/account-info/account-info.repository';
 
 @Injectable()
 export class StorageInfoService {
@@ -12,10 +13,12 @@ export class StorageInfoService {
 
   constructor(
     private StorageInfoRepository: StorageInfoRepository,
+    private AccountInfoRepositorySlave:AccountInfoRepositorySlave,
     private ZRedisService: ZRedisService,
   ) { }
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# READ
   async getStorageInfo(params: searchParams, loginUserInfo: any) {
+    return this.AccountInfoRepositorySlave.find()
     return await this.StorageInfoRepository.getStorageInfo(params, loginUserInfo);
   }
   // CREATE #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#

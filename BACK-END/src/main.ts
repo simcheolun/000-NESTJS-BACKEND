@@ -12,7 +12,7 @@ import * as fastify from 'fastify';
 
 
 async function startServe() {
-  
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter({
@@ -35,7 +35,7 @@ async function startServe() {
 
 
   // app.register(fastifyMultipart);
-  app.register(fastifyMultipart, { limits: { fileSize: 60 * 1024 * 1024 } }); 
+  app.register(fastifyMultipart, { limits: { fileSize: 60 * 1024 * 1024 } });
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
@@ -65,7 +65,14 @@ TypeOrmModule.forRootAsync({
 
 TABLE SERVICE
 constructor(...){
-@InjectRepository(AccountInfoEntitySlave, 'SLAVE')
-
+//추가부분 매개 리퍼지토리상부에  엔티티 추가
+   @InjectRepository(AccountInfoEntityMaster)
+    private AccountInfoRepositoryMaster: AccountInfoRepositoryMaster,
+  @InjectRepository(AccountInfoEntitySlave, 'SLAVE')
+    private AccountInfoRepositorySlave: AccountInfoRepositorySlave,
 }
+
+다중디비 리퍼지토리 주입시 해당 엔티티도 모듈에서 주입
+    TypeOrmModule.forFeature([EcountNoSendOtherEntity],'OTHER'),
+
 */

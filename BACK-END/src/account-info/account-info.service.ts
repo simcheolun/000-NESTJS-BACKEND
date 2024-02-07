@@ -3,18 +3,22 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ZRedisService } from 'z-redis/z-redis.service';
 import { createSN, returnJSONSingle } from 'src/Auth/custom.function';
 import { AccountInfoRepositoryMaster, AccountInfoRepositorySlave } from './account-info.repository';
+import { AccountInfoEntitySlave } from './entities/account-info.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AccountInfoService {
   cacheName = 'StorageInfoService'
 
   constructor(
+    @InjectRepository(AccountInfoEntitySlave, 'SLAVE')
     private AccountInfoRepositoryMaster: AccountInfoRepositoryMaster,
     private AccountInfoRepositorySlave: AccountInfoRepositorySlave,
     private ZRedisService: ZRedisService,
   ) { }
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# READ
   async getAccountInfo(params: any, loginUserInfo: any) {
+    console.log(await this.AccountInfoRepositoryMaster.findOne({where:{}}))
     return await this.AccountInfoRepositorySlave.getAccountInfo(params, loginUserInfo);
   }
   // update #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#

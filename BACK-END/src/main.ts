@@ -49,3 +49,23 @@ async function startServe() {
 }
 startServe();
 
+
+/*
+APP.MODULE.TS
+TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => typeOrmConfig('MASTER'),
+      inject: [ConfigService],
+    }),
+    // 다중Database연결
+    TypeOrmModule.forRootAsync({
+      name: 'SLAVE', // 이름 지정
+      useFactory: (configService: ConfigService) => typeOrmConfig('SLAVE'),
+      inject: [ConfigService],
+    }),
+
+TABLE SERVICE
+constructor(...){
+@InjectRepository(AccountInfoEntitySlave, 'SLAVE')
+
+}
+*/

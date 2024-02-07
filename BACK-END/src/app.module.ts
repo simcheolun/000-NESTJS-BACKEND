@@ -61,7 +61,7 @@ import { AccountInfoModule } from './account-info/account-info.module';
     // 각 모듈 주입  
     ZRedisModule,
     
-    StorageInfoModule,
+    // StorageInfoModule,
     
     AccountInfoModule,
   ],

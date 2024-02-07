@@ -9,7 +9,7 @@ import { ZRedisService } from 'z-redis/z-redis.service';
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forFeature([StorageInfoEntityMaster]),
+    TypeOrmModule.forFeature([StorageInfoEntityMaster],'MASTER'),
     TypeOrmModule.forFeature([StorageInfoEntitySlave],'SLAVE'),
   ],
   controllers: [StorageInfoController],

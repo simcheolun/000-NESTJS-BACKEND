@@ -20,7 +20,7 @@ export class JwtStrategyCar008 extends PassportStrategy(Strategy, 'car008') {
 }
 
 @Injectable()
-export class JwtStrategyMall extends PassportStrategy(Strategy, 'mall') {
+export class JwtStrategyMall extends PassportStrategy(Strategy, 'slave') {
   constructor(private readonly configService: ConfigService) {
     super({ 
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -30,7 +30,6 @@ export class JwtStrategyMall extends PassportStrategy(Strategy, 'mall') {
   }
 
   async validate(payload: any) {
-    console.log('JwtStrategyMall validate:', payload);
     return { userId: payload.sub };
   }
 }

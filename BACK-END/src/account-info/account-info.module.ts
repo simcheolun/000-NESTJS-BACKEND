@@ -10,7 +10,7 @@ import { AccountInfoRepositoryMaster, AccountInfoRepositorySlave } from './accou
   imports: [
     AuthModule,
     TypeOrmModule.forFeature([AccountInfoEntityMaster]),
-    TypeOrmModule.forFeature([AccountInfoEntitySlave],'SLAVE'),
+    TypeOrmModule.forFeature([AccountInfoRepositorySlave]), //AccountInfoEntitySlave
   ],
   controllers: [AccountInfoController],
   providers: [
@@ -18,7 +18,9 @@ import { AccountInfoRepositoryMaster, AccountInfoRepositorySlave } from './accou
     AccountInfoRepositorySlave,
     AccountInfoRepositoryMaster,
     ZRedisService,
-  ]
+  ],
+  exports:[AccountInfoRepositorySlave,
+    AccountInfoRepositoryMaster,]
 })
 export class AccountInfoModule {
   constructor(){

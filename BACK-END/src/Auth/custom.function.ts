@@ -74,7 +74,7 @@ export function returnJSONList(result: any, total: number, page: number, size: n
     code,
   }
 }
-export async function chekcToken(token: any, jwtService: any) {
+export async function checkToken(token: any, jwtService: any) {
   if (token == null || token == undefined || token == 'undefined' || token == 'null') {
     return {
       result: 'error',
@@ -92,7 +92,6 @@ export async function chekcToken(token: any, jwtService: any) {
       const expirationTime = new Date(tmpPayload.exp * 1000)
       console.log('발급시간:', issuedAt)
       console.log('만료시간:', expirationTime)
-
     } catch (error) {
       return {
         result: error,

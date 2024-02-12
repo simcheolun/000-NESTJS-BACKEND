@@ -16,7 +16,7 @@ import { typeOrmConfig } from './Auth/typeorm.config';
 
 import { ZRedisModule } from 'z-redis/z-redis.module';
 import { AccountInfoModule } from './account-info/account-info.module';
-import { TestModule } from './test/test.module';
+import { storageInfoModule } from './strage-info/strage-info.module';
 
 
 // bigInt 이슈
@@ -63,7 +63,8 @@ import { TestModule } from './test/test.module';
     
     AccountInfoModule,
     
-    TestModule,
+    storageInfoModule,
+    
   ],
 
   controllers: [AppController,],

@@ -18,7 +18,6 @@ export class AccountInfoRepositoryMaster extends Repository<AccountInfoEntityMas
 @Injectable()
 export class AccountInfoRepositorySlave extends Repository<AccountInfoEntitySlave>{
     constructor(
-        @InjectRepository(AccountInfoEntitySlave, 'SLAVE') private SLAVE : Repository<AccountInfoEntitySlave>,
         private dataSource: DataSource,
         private authService: AuthService,
         ) {

@@ -4,7 +4,7 @@ import { CreateAccountInfoDto } from './dto/create-account-info.dto';
 import { ApiBearerAuth, ApiBody, ApiExcludeEndpoint, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/Auth/jwt-auth.guard';
-import { chekcToken, returnJSONSingle } from 'src/Auth/custom.function';
+import { checkToken, returnJSONSingle } from 'src/Auth/custom.function';
 import { Throttle } from '@nestjs/throttler';
 
 @ApiTags('플랫폼 계정관리') // 매항목마다 제목생성
@@ -38,7 +38,7 @@ export class AccountInfoController {
   })
   @Post('/setMyInfo')
   async setMyInfo(@Body() data: any, @Headers() headers: any) {
-    const tokenStatus = await chekcToken(headers.exjwtauthorization, this.jwtService)
+    const tokenStatus = await checkToken(headers.exjwtauthorization, this.jwtService)
     if (tokenStatus.code != 200) {
       return returnJSONSingle(tokenStatus.result, tokenStatus.message, tokenStatus.statusCode, tokenStatus.code)
     }
@@ -55,8 +55,8 @@ export class AccountInfoController {
     schema: {
       type: 'object',
       properties: {
-        id: { type: 'string', default: null },
-        pw: { type: 'string', default: null },
+        id: { type: 'string', default: 'king008' },
+        pw: { type: 'string', default: 'jirno' },
 
       }
     }
@@ -64,7 +64,7 @@ export class AccountInfoController {
   // @ApiBody({ type: CreateAccountInfoDto })
   @Post('/LoginByInventory')
   async LoginbyInventory(@Body() params: any, @Ip() ip: any) {
-    // return await this.accountInfoService.LoginbyInventory(params, ip);
+    return await this.accountInfoService.LoginbyInventory(params, ip);
   }
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
   @Post('/getAccountInfo')
@@ -100,7 +100,7 @@ export class AccountInfoController {
     }
   })
   async getAccountInfo(@Body() params: any, @Headers() headers: any) {
-    const tokenStatus = await chekcToken(headers.exjwtauthorization, this.jwtService)
+    const tokenStatus = await checkToken(headers.exjwtauthorization, this.jwtService)
     if (tokenStatus.code != 200) {
       return returnJSONSingle(tokenStatus.result, tokenStatus.message, tokenStatus.statusCode, tokenStatus.code)
     }
@@ -136,7 +136,7 @@ export class AccountInfoController {
   })
   @Post('/stateAccountInfo')
   async delete(@Body() data: any, @Headers() headers: any) {
-    const tokenStatus = await chekcToken(headers.exjwtauthorization, this.jwtService)
+    const tokenStatus = await checkToken(headers.exjwtauthorization, this.jwtService)
     if (tokenStatus.code != 200) {
       return returnJSONSingle(tokenStatus.result, tokenStatus.message, tokenStatus.statusCode, tokenStatus.code)
     }

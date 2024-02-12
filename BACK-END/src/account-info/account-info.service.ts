@@ -14,14 +14,14 @@ export class AccountInfoService {
   constructor(
     // @InjectRepository(AccountInfoEntityMaster)
     private AccountInfoRepositoryMaster: AccountInfoRepositoryMaster,
-    @InjectRepository(AccountInfoEntitySlave, 'SLAVE')
+    // @InjectRepository(AccountInfoEntitySlave, 'SLAVE')
     // private AccountInfoRepositorySlave: Repository<AccountInfoEntitySlave>,
     private AccountInfoRepositorySlave: AccountInfoRepositorySlave,
     private ZRedisService: ZRedisService,
   ) { }
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# READ
   async getAccountInfo(params: any, loginUserInfo: any) {
-    console.log(this.AccountInfoRepositorySlave.metadata)
+
     const master = await this.AccountInfoRepositoryMaster.findOne({where:{}})
    const slave =  await this.AccountInfoRepositorySlave.findOne({where:{}})
    return {master,slave}

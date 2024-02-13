@@ -1,0 +1,58 @@
+이미지서버의 주소: 45.32.24.96
+해당 API를 사용시 api_key가 필요합니다.
+api_key: dc8e41c4992051c9741607a3d0e9aa77c054e9face9bc720
+- api/find
+- api/upload
+
+
+
+
+페이레터 관리페이지 
+사업자: 4478602481
+계정: admin0440
+통장: 32314697104010
+비번: hh701026!!
+고객사 관리자페이지 : https://manager.payletter.com/Login
+개발자센터 : https://www.payletter.com/ko/technical/index#a210d015d9
+
+
+
+freeDns
+cherwoon / simcherwoon
+pw:zheyun1977
+
+
+mobaXtream
+마스터 암호: 123456
+원격 접속:
+ssh11223: 
+car008
+car008in2018@!
+
+서버슈퍼비번: Yw{28WjN?Z?54b37
+ssh11223:car008@test.car008.kro.kr = car008in2018@!
+car008@test.car008.kro.kr = car008in2018@!
+
+
+회사 메일
+ID : car008parts@naver.com
+PW : guang0524!
+
+
+008구닥다리
+관리계정:
+admin
+car008admin2021
+
+
+
+도메인 ssl인증서 결제 및 발급ps://www.koreassl.com
+아이디: admin0440@gmail.com
+비번 : hh701026!!
+
+
+https://sapi.007vin.com/
+账号  广州弘益昇国际贸易有限公司
+         18898472223
+密码   18898472223a
+

@@ -22,8 +22,10 @@ export class AccountInfoService {
   // #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# READ
   async getAccountInfo(params: any, loginUserInfo: any) {
 
-    const master = await this.AccountInfoRepositoryMaster.findOne({where:{}})
-   const slave =  await this.AccountInfoRepositorySlave.findOne({where:{}})
+  //   const master = await this.AccountInfoRepositoryMaster.findOne({where:{}})
+  //  const slave =  await this.AccountInfoRepositorySlave.findOne({where:{}})
+  const master = await this.AccountInfoRepositoryMaster.getAccountInfo()
+  const slave =  await this.AccountInfoRepositorySlave.getAccountInfo(params,loginUserInfo)
    return {master,slave}
   }
   // update #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#

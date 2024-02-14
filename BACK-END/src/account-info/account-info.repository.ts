@@ -13,6 +13,15 @@ export class AccountInfoRepositoryMaster extends Repository<AccountInfoEntityMas
         ) {
         super(AccountInfoEntityMaster, dataSource.createEntityManager());
     }
+    async getAccountInfo(){
+        const TABLENAME = 'accountInfo'
+        let queryBuilder = this.createQueryBuilder(TABLENAME)
+            .select(TABLENAME)
+            // .where(`${TABLENAME}.companyId = :companyId`, { companyId: loginUserInfo.companyId })
+            .orderBy(`${TABLENAME}.seq`, 'DESC')
+            const result = await queryBuilder.getOne();
+        return result
+    }
 }
 
 @Injectable()

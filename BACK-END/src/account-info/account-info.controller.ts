@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Headers, Ip, UseGuards } from '@nestjs/common';
+import { AccountInfoService } from './account-info.service';
 import { CreateAccountInfoDto } from './dto/create-account-info.dto';
 import { ApiBearerAuth, ApiBody, ApiExcludeEndpoint, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
 import { JwtAuthGuard } from 'src/Auth/jwt-auth.guard';
 import { checkToken, returnJSONSingle } from 'src/Auth/custom.function';
 import { Throttle } from '@nestjs/throttler';
-import { AccountInfoService } from './account-info.service';
 
 @ApiTags('플랫폼 계정관리') // 매항목마다 제목생성
 @Controller('api')

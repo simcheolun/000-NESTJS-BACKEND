@@ -43,7 +43,7 @@ export class storageInfoController {
   async getStorageInfo(@Body() params: any, @Headers() headers: any) {
     const tokenStatus = await checkToken(headers.exjwtauthorization, this.jwtService)
     if (tokenStatus.code != 200) {
-      return returnJSONSingle(tokenStatus.result, tokenStatus.message, tokenStatus.statusCode, tokenStatus.code)
+      // return returnJSONSingle(tokenStatus.result, tokenStatus.message, tokenStatus.statusCode, tokenStatus.code)
     }
     const loginUserInfo = tokenStatus.loginUserInfo
     return await this.storageInfoService.getStorageInfo(params, loginUserInfo);

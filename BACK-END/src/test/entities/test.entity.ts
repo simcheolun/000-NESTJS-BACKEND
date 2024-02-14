@@ -41,7 +41,6 @@ export class testMasterEntity {
 export class testSlaveEntity {
     @PrimaryGeneratedColumn({ type: "bigint", name: "seq" }) seq: number;
     @Column({ type: "varchar", name: "name" }) name: string;
-    @Column({ type: "varchar", name: "id" }) id: string;
 
     // bigint to number --------------------------
     toJSON() {

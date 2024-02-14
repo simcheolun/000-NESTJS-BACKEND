@@ -7,52 +7,24 @@ import { testMasterRepository, testSlaveRepository } from './test.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      username:'root',
-      password: 'car008mysqlpasswd@!@',
-        host:'127.0.0.1',
-        name: 'MATER',
-        type: 'mysql',
-        port: 3306,
-        entities: [testMasterEntity],
-        synchronize: false,
-        extra: {
-            connectionLimit: 10,
-        },
-    }),
-    TypeOrmModule.forRoot({
-        username:'root',
-        password:'car008mysqlpasswd@!@',
-        host:'192.168.0.6',
-        name: 'SLAVE',
-        type: 'mysql',
-        port: 3307,
-        entities: [testSlaveEntity],
-        synchronize: false,
-        extra: {
-            connectionLimit: 10,
-        },
-    }),
-],
+
+    TypeOrmModule.forFeature([testMasterEntity]),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   name: "SALVE",
+    //   host: "115.95.188.130",
+    //   port: 3306,
+    //   username: "root",
+    //   password: "car008mysqlpasswd@!@",
+    //   database: 'car008',
+    //   entities: [testSlaveEntity],
+    // }),
+    TypeOrmModule.forFeature([testSlaveEntity],'SLAVE')
+  ],
   controllers: [TestController],
-  providers: [TestService,testMasterRepository,testSlaveRepository],
-  exports:[TestService]
+  providers: [TestService, testMasterRepository, testSlaveRepository],
+  exports: [TestService]
 })
 export class TestModule {
-  constructor() {
-    const dddd: any = TypeOrmModule.forRoot({
-      username:'root',
-      password:'car008mysqlpasswd@!@',
-      host:'192.168.0.6',
-      name: 'SLAVE',
-      type: 'mysql',
-      port: 3307,
-      entities: [testSlaveEntity],
-      synchronize: false,
-      extra: {
-          connectionLimit: 10,
-      },
-  })
-    console.log(dddd.imports[0].providers)
-   }
+  constructor() { }
 }

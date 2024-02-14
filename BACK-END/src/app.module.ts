@@ -18,6 +18,8 @@ import { ZRedisModule } from 'z-redis/z-redis.module';
 import { AccountInfoModule } from './account-info/account-info.module';
 import { storageInfoModule } from './strage-info/strage-info.module';
 import { TestModule } from './test/test.module';
+import { testSlaveEntity } from './test/entities/test.entity';
+import { AccountInfoRepositorySlave } from './account-info/account-info.repository';
 
 
 // bigInt 이슈
@@ -40,7 +42,8 @@ import { TestModule } from './test/test.module';
       useFactory: (configService: ConfigService) => typeOrmConfig('SLAVE'),
       inject: [ConfigService],
     }),
-    
+   
+
     CacheModule.register({
       store: redisStore,
       host: process.env.REDIS_HOST,
@@ -57,7 +60,6 @@ import { TestModule } from './test/test.module';
     }),
 
     
-
 
     // 각 모듈 주입  
     ZRedisModule,

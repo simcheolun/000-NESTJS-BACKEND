@@ -7,15 +7,16 @@ import { testSlaveEntity } from './entities/test.entity';
 
 @Injectable()
 export class TestService {
-  cacheName = 'StorageInfoService'
+  cacheName = 'TEST-SERVICE'
 
   constructor(
     private testMasterRepository: testMasterRepository,
+    @InjectRepository(testSlaveEntity,'SLAVE') 
     private testSlaveRepository: testSlaveRepository,
-  ) { }
+    ) { }
   async getTestinfo(params: any) {
-    const master = await this.testMasterRepository.findOne({where:{}})
-   const slave =  await this.testSlaveRepository.findOne({where:{}})
-   return {master,slave}
-  } 
+  const master = await this.testMasterRepository.getTestInfo()
+  const slave = await this.testSlaveRepository.findOne({where:{}})
+  return { master, slave }
+}
 }

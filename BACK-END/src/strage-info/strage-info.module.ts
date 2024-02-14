@@ -11,7 +11,7 @@ import { AuthModule } from 'src/Auth/auth.module';
   imports: [
     AuthModule,
     TypeOrmModule.forFeature([storageInfoEntityMaster]),
-    TypeOrmModule.forFeature([storageInfoEntitySlave])],
+    TypeOrmModule.forFeature([storageInfoEntitySlave],'SLAVE')],
   controllers:[storageInfoController],
   providers: [
     JwtService,

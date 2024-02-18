@@ -15,8 +15,8 @@ import * as redisStore from 'cache-manager-ioredis'
 import { typeOrmConfig } from './Auth/typeorm.config';
 
 import { ZRedisModule } from 'z-redis/z-redis.module';
-import { AccountInfoModule } from './account-info/account-info.module';
-import { storageInfoModule } from './strage-info/strage-info.module';
+import { GroupUserModule } from './group-user/group-user.module';
+import { GroupCompanyModule } from './group-company/group-company.module';
 
 
 // bigInt 이슈
@@ -61,9 +61,11 @@ import { storageInfoModule } from './strage-info/strage-info.module';
     // 각 모듈 주입  
     ZRedisModule,
     
-    AccountInfoModule,
+          
+    GroupUserModule,
     
-    storageInfoModule,
+          
+    GroupCompanyModule,
     
   ],
 

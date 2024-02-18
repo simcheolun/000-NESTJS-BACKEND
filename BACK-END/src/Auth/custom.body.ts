@@ -1,0 +1,137 @@
+export const listSchema = {
+    type: 'object',
+    properties: {
+
+        objSearchMapper: {
+            type: 'object',
+            properties: {
+                searchKeyword: { type: 'string', default: null },
+            },
+        },
+        page: { type: 'number', default: 1 },
+        size: { type: 'number', default: 14 },
+    }
+}
+
+export const listSchemaGet = [
+    { // 0
+        name: 'searchKeyword',
+        type: 'string',
+        required: false,
+        default: null,
+    },
+    { // 1
+        name: 'page',
+        type: 'number',
+        required: true,
+        default: 1,
+    },
+    { // 2
+        name: 'size',
+        type: 'number',
+        required: true,
+        default: 14,
+    },
+    { // 3
+        name: 'id',
+        type: 'number',
+        required: true,
+        default: 1,
+    },
+    { // 4
+        name: 'login_id',
+        type: 'string',
+        required: true,
+        default: 'admin',
+    },
+    { // 5
+        name: 'login_pw',
+        type: 'string',
+        required: true,
+        default: 'password',
+    },
+]
+
+export const searchIdSchema = {
+    type: 'object',
+    properties: {
+        id: { type: 'number', default: 1 },
+    }
+}
+
+
+export const loginSchema = {
+    type: 'object',
+    properties: {
+        login_id: { type: 'string', default: 'admin' },
+        login_pw: { type: 'string', default: 'password' },
+    }
+}
+
+export const insertUserInfoSchema = {
+    type: 'object',
+    properties: {
+        // company_license: { type: 'string', default: '1234567890' },
+        // company_name: { type: 'string', default: '남이에컴퍼니' },
+        // company_post_number: { type: 'string', default: '123456' },
+        // company_address: { type: 'string', default: '서울시 강남구 도곡동 271-1' },
+
+        user_name: { type: 'string', default: '홍길동' },
+        user_sex: { type: 'string', default: '남' },
+        user_borth: { type: 'string', default: '19771107' },
+        login_id: { type: 'string', default: 'admin' },
+        login_pw: { type: 'string', default: 'password' },
+        user_email: { type: 'string', default: 'hongGilDong@naver.com' },
+        user_mobile: { type: 'string', default: '01055513210' },
+        user_post_number: { type: 'string', default: '105555' },
+        user_address: { type: 'string', default: '서울시 강남구 도곡동 271-1' },
+    }
+}
+
+export const updateUserInfoSchema = {
+    type: 'object',
+    properties: {
+        id: { type: 'string', default: 1 },
+        user_name: { type: 'string', default: '홍길동' },
+        user_sex: { type: 'string', default: '남' },
+        user_borth: { type: 'string', default: '19771107' },
+        login_id: { type: 'string', default: 'admin' },
+        user_email: { type: 'string', default: 'hongGilDong@naver.com' },
+        user_mobile: { type: 'string', default: '01055513210' },
+        user_post_number: { type: 'string', default: '105555' },
+        user_address: { type: 'string', default: '서울시 강남구 도곡동 271-1' },
+    }
+}
+
+export const insertCompanyInfoSchema = {
+    type: 'object',
+    properties: {
+        company_license: { type: 'string', default: '1234567890' },
+        company_name: { type: 'string', default: '남이에컴퍼니' },
+        company_post_number: { type: 'string', default: '123456' },
+        company_address: { type: 'string', default: '서울시 강남구 도곡동 271-1' },
+    }
+}
+
+export const updateCompanyInfoSchema = {
+    type: 'object',
+    properties: {
+        id: { type: 'string', default: 1 },
+        company_license: { type: 'string', default: '1234567890' },
+        company_name: { type: 'string', default: '남이에컴퍼니' },
+        company_post_number: { type: 'string', default: '123456' },
+        company_address: { type: 'string', default: '서울시 강남구 도곡동 271-1' },
+    }
+}
+
+export const messageSchema = {
+    processOK: '요청이 반영되었습니다.',
+    passwordERROR: '잘못된 비번입니다.',
+    userNOTFIND: '사용자가 존재하지 않습니다.',
+    userFIND: '사용자가 존재합니다.',
+    companyFIND: '회사정보가 존재합니다.',
+}
+export const statusCode = {
+    OK: 'OK',
+    CANCEL: 'CANCEL'
+}

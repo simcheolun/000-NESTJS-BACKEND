@@ -16,14 +16,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
       inject: [ConfigService],
     }),
-    // JwtModule.registerAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: async (configService: ConfigService) => ({
-    //     secret: configService.get<string>('JWT_SECRET'),
-    //     signOptions: { expiresIn: configService.get<string>('TOKEN_EXPIR_TIME') },
-    //   }),
-    //   inject: [ConfigService],
-    // }),
   ],
   providers: [AuthService, JwtStrategyCar008,JwtStrategyMall],
   exports: [AuthService,JwtModule],

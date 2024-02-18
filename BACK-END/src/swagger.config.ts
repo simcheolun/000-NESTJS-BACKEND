@@ -203,8 +203,8 @@ const swaggerCustomOptions: SwaggerCustomOptions = {
 // swagger.config.ts
 export function swaggerOptions(app: INestApplication): void {
     const options = new DocumentBuilder()
-        .setTitle('MALL API')
-        .setDescription('몰 백엔드 nestjs + fastify + throttle + jwt + mysql')
+        .setTitle('BACKEND API')
+        .setDescription('백엔드 nestjs + fastify + throttle + jwt + mysql')
         .setVersion('0.0.1')
         //JWT 설정
         .addBearerAuth(

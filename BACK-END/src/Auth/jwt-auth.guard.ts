@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
   canActivate(context: ExecutionContext){
-    console.log('짝!짝!짝!')
+    // console.log('짝!짝!짝!')
     return true
    }
   // canActivate(context: ExecutionContext) {

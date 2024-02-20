@@ -49,25 +49,28 @@ export async function getpaginatedData(list: any[], page: any, size: any) {
 }
 
 // 배열> 회사정보 삽입
-export async function setSubNodeCompany(parentList: any[], companyList: any[]) {
+export async function setSubNode(parentList: any[], companyList: any[],keyName:string) {
   parentList.map((item: any) => {
-    item['company_info'] = companyList.find((subItem: any) => {
+    item[keyName] = companyList.find((subItem: any) => {
       return subItem.id == item.company_id
     })
   })
   return parentList
 }
+
 // 낱개> 회사정보 삽입
-export async function setSubNodeCompanySingle(data: any, companyList: any[]) {
-  data['company_info'] = companyList.find((subItem: any) => {
+export async function setSubNodeSingle(data: any, companyList: any[],keyName:string) {
+  data[keyName] = companyList.find((subItem: any) => {
     return subItem.id == data.company_id
   })
   return data
 }
+
 // 정보 필터링{}
 export async function getDataForId(data: any, id: number) {
   return data.find((item: any) => item.id == id)
 }
+
 // 정보 필터링 []
 export async function getDataForKeyword(data: any, keyName: any[], searchKeyword: string) {
   return data.filter((item: any) => {

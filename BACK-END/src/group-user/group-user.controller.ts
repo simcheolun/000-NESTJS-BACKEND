@@ -14,6 +14,16 @@ export class GroupUserController {
     private readonly jwtService: JwtService,
   ) { }
 
+
+  @Get('/createUserMany')
+  @ApiOperation({
+    summary: '사용자 다량생성',
+    description: ``,
+  })
+  async createUserMany(@Query() params: any) {
+    return await this.groupUserService.createUserMany(params);
+  }
+
   @Get('/createPassword')
   @ApiOperation({
     summary: '비번생성',

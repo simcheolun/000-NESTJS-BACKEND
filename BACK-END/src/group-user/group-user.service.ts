@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GroupUserRepository, GroupUserRepositorySlave } from './group-user.repository';
 import { GroupUserEntitySlave } from './entities/group-user.entity';
-import { consolE, createSN, Decrypt, Encrypt, getpaginatedData, GroupUserInsert, GroupUserUpdate, returnDataList, returnDataSingle, returnJSONSingle, returnLoginData, returnMessage, getCachingData, setSubNodeCompany, getDataForId, getDataForKeyword } from 'src/Auth/custom.function';
+import { consolE, createSN, Decrypt, Encrypt, getpaginatedData, GroupUserInsert, GroupUserUpdate, returnDataList, returnDataSingle, returnJSONSingle, returnLoginData, returnMessage, getCachingData, setSubNode, getDataForId, getDataForKeyword } from 'src/Auth/custom.function';
 import { hash } from 'bcrypt';
 import { ZRedisService } from 'z-redis/z-redis.service';
 import bcrypt from 'bcrypt'
@@ -22,6 +22,31 @@ export class GroupUserService {
     private GroupCompanyRepositorySlave: GroupCompanyRepositorySlave,
   ) { }
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
+            사용자 20만개 생성
+   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
+  async createUserMany(params: any) {
+    const userInfo = {
+      user_number: 1234567890,
+      user_name: '엄광일',
+      user_sex: 'n',
+      user_borth: '19000000',
+      login_id: 'loginID',
+      login_pw: '$2b$10$tgtaDimJ4Iefq1k1yC9bzuD6J.okW/Bahz7/2xe3rb28VlLKWDqp6',
+      user_email: 'email@tokkai.com',
+      user_mobile: '01032101234',
+      user_post_number: '100555',
+      user_address: '서울시 강남구 도곡동 271-1',
+      company_id: 555
+    }
+    let userInfos:any[]=[]
+    for (let i=3;i<5000;i++){
+      userInfos.push(userInfo)
+    }
+    await this.GroupUserRepository.insert(userInfos)
+    return '완성되었음.'
+  }
+
+  /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
            비번생성
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
   async createPassword(data: any) {
@@ -39,17 +64,22 @@ export class GroupUserService {
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
   async getUserInfo(params: any, loginUserInfo: any) {
     let caching = true
+
     let cachingDataCompany = await getCachingData(
       this.ZRedisService, process.env.REDIS_KEY_GORUP_COMPANY, this.GroupCompanyRepositorySlave)
+
     let cachingDataUser: any = await getCachingData(
       this.ZRedisService, this.REDIS_KEY, this.GroupUserRepositorySlave)
+
     const { page = 1, size = 14, searchKeyword } = params
+
     let filteredData = cachingDataUser;
     if (searchKeyword) {
-      filteredData = await getDataForKeyword(cachingDataUser, 'user_name', searchKeyword)
+      filteredData = await getDataForKeyword(cachingDataUser, ['user_name'], searchKeyword)
     }
+
     const { total, startIndex, endIndex, paginatedData } = await getpaginatedData(filteredData, page, size)
-    const resultData = await setSubNodeCompany(paginatedData, cachingDataCompany)
+    const resultData = await setSubNode(paginatedData, cachingDataCompany,'company_info')
     return returnDataList(resultData, total, page, size, caching)
   }
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
@@ -81,8 +111,7 @@ export class GroupUserService {
     // 암호생성
     data.hashedPassword = await hash(data.login_pw, 10)
     // 사용자 정보 삽입
-    const newData = await this.GroupUserRepository.insert(
-      GroupUserInsert(data))
+    const newData = await this.GroupUserRepository.insert(GroupUserInsert(data))
     // 등록된 ID 추출
     data.id = newData.identifiers[0].id
     // 캐싱 재 설정

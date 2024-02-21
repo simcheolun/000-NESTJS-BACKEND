@@ -135,3 +135,18 @@ export const statusCode = {
     OK: 'OK',
     CANCEL: 'CANCEL'
 }
+
+export const ecountApisSchema = {
+    login: {
+        type: 'object',
+        properties: {
+            id: { type: 'string', default: 1 },
+            COM_CODE: { type: 'string', default: '608591' },
+            USER_ID: { type: 'string', default: '심철운' },
+            API_CERT_KEY: { type: 'string', default: '0c55dfa58e5d14390ab5102aa39ef38c36' },
+            LAN_TYPE: { type: 'string', default: 'ko-KR' },
+            ZONE: { type: 'string', default: 'CD' },
+        }
+    }
+
+}

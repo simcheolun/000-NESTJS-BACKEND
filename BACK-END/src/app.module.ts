@@ -17,6 +17,7 @@ import { typeOrmConfig } from './Auth/typeorm.config';
 import { ZRedisModule } from 'z-redis/z-redis.module';
 import { GroupUserModule } from './group-user/group-user.module';
 import { GroupCompanyModule } from './group-company/group-company.module';
+import { EcountApiModule } from './ecount-api/ecount-api.module';
 
 
 // bigInt 이슈
@@ -66,6 +67,9 @@ import { GroupCompanyModule } from './group-company/group-company.module';
     
           
     GroupCompanyModule,
+    
+          
+    EcountApiModule,
     
   ],
 

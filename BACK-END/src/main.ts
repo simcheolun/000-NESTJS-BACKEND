@@ -33,8 +33,6 @@ async function startServe() {
     threshold: 0,
   });
 
-
-  // app.register(fastifyMultipart);
   app.register(fastifyMultipart, { limits: { fileSize: 60 * 1024 * 1024 } });
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));

@@ -1,3 +1,5 @@
+import { getYYYYMMDD } from "./custom.function"
+
 export const listSchema = {
     type: 'object',
     properties: {
@@ -146,6 +148,13 @@ export const ecountApisSchema = {
             API_CERT_KEY: { type: 'string', default: '0c55dfa58e5d14390ab5102aa39ef38c36' },
             LAN_TYPE: { type: 'string', default: 'ko-KR' },
             ZONE: { type: 'string', default: 'CD' },
+        }
+    },
+    GetListInventoryBalanceStatus: {
+        type: 'object',
+        properties: {
+            BASE_DATE: { type: 'string', default: getYYYYMMDD() },
+            ZERO_FLAG: { type: 'string', default: 'N' },
         }
     }
 

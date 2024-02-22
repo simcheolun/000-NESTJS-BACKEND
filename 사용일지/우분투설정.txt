@@ -1,0 +1,31 @@
+
+
+1) 폴더 권한 수정
+sudo chown asu:asu /var/www/html
+2) 파일 권한 수정
+cd /var/www/html/
+sudo chmod 770 index.nginx-debian.html
+하위 폴더도 모두 권한을 얻고 싶다면,
+sudo chmod -R 770 /var/www/html
+
+sudo apt-get update 
+sudo apt-get install nginx => nginx설치
+
+Ssh server 설치
+sudo apt-get install openssh-server
+
+ssh 설치
+sudo apt install ssh -y 
+
+아이피주소확인
+sudo apt update -y
+ifconfig
+
+sudo service ssh start    => ssh 구동
+sudo /etc/init.d/ssh restart => 선택실행
+sudo ufw enable => 방화벽 활성화
+sudo ufw status => 방화벽 확인
+
+
+
+sudo passwd root =>root비번설정

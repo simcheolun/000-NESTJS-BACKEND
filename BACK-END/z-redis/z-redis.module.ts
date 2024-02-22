@@ -10,6 +10,8 @@ import * as redisStore from 'cache-manager-ioredis'
 import { ZRedisService } from './z-redis.service';
 import {createClient } from 'ioredis'
 import { Cache } from 'cache-manager';
+import { ZRedisController } from './z-redis.controller';
+import { JwtService } from '@nestjs/jwt';
 @Module({
   imports: [
     // 레디스서버 구축해야함. 
@@ -26,8 +28,10 @@ import { Cache } from 'cache-manager';
       }
     }),
   ],
+  controllers:[ZRedisController],
   providers: [
-    ZRedisService
+    ZRedisService,
+    JwtService
   ],
   exports: [
     // BaseCacheModule,

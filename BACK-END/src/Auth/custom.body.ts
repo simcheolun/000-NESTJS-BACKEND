@@ -159,3 +159,14 @@ export const ecountApisSchema = {
     }
 
 }
+
+
+export const redisSchema = {
+    keyName: { // 0
+        name: 'keyName',
+        type: 'string',
+        required: false,
+        default: 'key',
+    },
+
+}

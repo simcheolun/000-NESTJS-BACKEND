@@ -1,0 +1,17 @@
+sudo apt update
+sudo apt install ufw
+
+활성화
+sudo ufw enable
+
+포트설정 
+sudo ufw allow 6379
+
+포트삭제 
+sudo ufw delete allow 6379
+
+상태확인
+sudo ufw status
+
+방화벽 비활성화
+sudo ufw disable

@@ -1,0 +1,18 @@
+sudo apt update
+sudo apt install redis-server
+레디스서버 시작
+sudo systemctl start redis-server
+부팅시 자동으로 시작
+sudo systemctl enable redis-server
+
+재시작
+sudo systemctl restart redis-server
+설정 편집
+sudo nano /etc/redis/redis.conf
+
+암호설정
+requirepass YOUR_PASSWORD
+
+
+etc/redis/redis.conf  
+bind 127.0.0.1 ::1 부분 주석처리: # 127.0.0.1 ::1

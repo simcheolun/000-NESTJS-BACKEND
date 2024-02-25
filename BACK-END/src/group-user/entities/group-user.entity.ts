@@ -32,6 +32,7 @@ export class GroupUserEntity {
     @Column({ type: "varchar", name: "user_address" }) user_address: string;
     @Column({ type: "int", name: "company_id" }) company_id: number;
     @DeleteDateColumn({ type: "timestamp", name: "deleteAt",nullable: true,select: true }) deleteAt: string;
+    @Column({ type: "int", name: "point" }) point: number;
 }
 
 
@@ -50,4 +51,5 @@ export class GroupUserEntitySlave {
     @Column({ type: "varchar", name: "user_address" }) user_address: string;
     @Column({ type: "int", name: "company_id" }) company_id: number;
     @DeleteDateColumn({ type: "timestamp", name: "deleteAt",nullable: true,select: false }) deleteAt: string;
+    @Column({ type: "int", name: "point" }) point: number;
 }

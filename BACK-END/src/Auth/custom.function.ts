@@ -301,6 +301,11 @@ export function GroupUserUpdate(data: any) {
     user_address: data.user_address
   }
 }
+export function GroupUserPointUpdate(data: any) {
+  return {
+    point: data.point
+  }
+}
 export function GroupCompanyInsert(data: any) {
   return {
     company_number: createSN(),

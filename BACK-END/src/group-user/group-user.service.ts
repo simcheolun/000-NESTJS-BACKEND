@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GroupUserRepository, GroupUserRepositorySlave } from './group-user.repository';
 import { GroupUserEntitySlave } from './entities/group-user.entity';
-import { consolE, createSN, Decrypt, Encrypt, getpaginatedData, GroupUserInsert, GroupUserUpdate, returnDataList, returnDataSingle, returnJSONSingle, returnLoginData, returnMessage, getCachingData, setSubNode, getDataForId, getDataForKeyword } from 'src/Auth/custom.function';
+import { consolE, createSN, Decrypt, Encrypt, getpaginatedData, GroupUserInsert, GroupUserUpdate, returnDataList, returnDataSingle, returnJSONSingle, returnLoginData, returnMessage, getCachingData, setSubNode, getDataForId, getDataForKeyword, GroupUserPointUpdate } from 'src/Auth/custom.function';
 import { hash } from 'bcrypt';
 import { ZRedisService } from 'z-redis/z-redis.service';
 import bcrypt from 'bcrypt'
@@ -38,8 +38,8 @@ export class GroupUserService {
       user_address: '서울시 강남구 도곡동 271-1',
       company_id: 555
     }
-    let userInfos:any[]=[]
-    for (let i=3;i<5000;i++){
+    let userInfos: any[] = []
+    for (let i = 3; i < 5000; i++) {
       userInfos.push(userInfo)
     }
     await this.GroupUserRepository.insert(userInfos)
@@ -79,12 +79,16 @@ export class GroupUserService {
     }
 
     const { total, startIndex, endIndex, paginatedData } = await getpaginatedData(filteredData, page, size)
-    const resultData = await setSubNode(paginatedData, cachingDataCompany,'company_info')
+    const resultData = await setSubNode(paginatedData, cachingDataCompany, 'company_info')
     return returnDataList(resultData, total, page, size, caching)
   }
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
            사용자 정보열람 {}
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
+  async getMyInfo(loginUserInfo: any) {
+    const myInfo = await this.GroupUserRepository.findOne({ where: { id: loginUserInfo.id } })
+    return returnDataSingle(myInfo, 200, true)
+  }
   async getUserInfoOne(params: any, loginUserInfo: any) {
     let caching = true
     let cachingData: any = await getCachingData(
@@ -96,6 +100,7 @@ export class GroupUserService {
     }
     return returnDataSingle(filteredData[0], 200, true)
   }
+
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
              사용자 정보등록
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
@@ -132,10 +137,64 @@ export class GroupUserService {
     await this.GroupUserRepository.update({
       id: data.id
     }, GroupUserUpdate(data))
+    return returnDataSingle(data, 201, false)
+  }
+
+  async updatePoint(data: any, loginUserInfo: any) {
+    const currentInfo:any =  await this.GroupUserRepository.findOne({where:{id:loginUserInfo.id}})
+    switch (data.status) {
+      case '1등': {
+        currentInfo.point += 200000
+        break;
+      }
+      case '2등': {
+        currentInfo.point += 100000
+        break;
+      }
+      case '3등': {
+        currentInfo.point += 50000
+        break;
+      }
+      case '4등': {
+        currentInfo.point += 20000
+        break;
+      }
+      case '5등': {
+        currentInfo.point += 10000
+        break;
+      }
+      case '구매': {
+        currentInfo.point += -10000
+        break;
+      }
+    }
+    console.log(currentInfo)
+    if(currentInfo.point <0 ){
+      currentInfo.point = 0
+      return returnJSONSingle(currentInfo,'충전후 이용하여주세요.','OK',400)
+    }
+    await this.GroupUserRepository.update({
+      id: currentInfo.id
+    }, { point: currentInfo.point })
+
+    return returnDataSingle(currentInfo, 201, false)
+  }
+
+  async updateUserInfo_caching(data: any) {
+    await this.GroupUserRepository.update({
+      id: data.id
+    }, GroupUserUpdate(data))
     let cachingData = await this.GroupUserRepositorySlave.find()
     await this.ZRedisService.setCaching(this.REDIS_KEY, cachingData)
     return returnDataSingle(data, 201, false)
   }
+  async updateUserPoint(data: any) {
+    await this.GroupUserRepository.update({
+      id: data.id
+    }, GroupUserPointUpdate(data))
+    return returnDataSingle(data, 201, false)
+  }
+
 
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
              캐싱삭제
@@ -177,33 +236,8 @@ export class GroupUserService {
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
              로그인
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
-  async login(data: any) {
-    const { login_id, login_pw } = data
-    let cachingData = await this.ZRedisService.getCachingList(this.REDIS_KEY)
-    if (!cachingData.length) {
-      cachingData = await this.GroupUserRepositorySlave.find()
-      console.log(cachingData)
-      await this.ZRedisService.setCaching(this.REDIS_KEY, cachingData)
-    }
-    const currentData: any = cachingData.find((item: any) => item.login_id == login_id)
-    if (currentData) {
-      const isValidPassword = await bcrypt.compare(login_pw, currentData.login_pw);
-      if (isValidPassword) {
-        const jwtPayload: any = { loginInfo: currentData };
-        const jwtToken = await this.AuthService.createToken(jwtPayload);
-        currentData.login_token = jwtToken
-        delete currentData.login_pw
-        delete currentData.deleteAt
-        return returnLoginData(currentData, messageSchema.processOK, 200, true)
-      } else {
-        return returnLoginData(data, messageSchema.passwordERROR, 400, true)
-      }
-    } else {
-      return returnLoginData(data, messageSchema.userNOTFIND, 400, true)
-    }
-  }
 
-  async login_DB(data: any) {
+  async login(data: any) {
     const { login_id, login_pw } = data
     const currentData: any = await this.GroupUserRepository.findOne({
       where: { login_id },      // select: ["login_id", "login_pw"]

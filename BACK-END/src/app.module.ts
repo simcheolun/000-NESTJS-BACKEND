@@ -18,6 +18,7 @@ import { ZRedisModule } from 'z-redis/z-redis.module';
 import { GroupUserModule } from './group-user/group-user.module';
 import { GroupCompanyModule } from './group-company/group-company.module';
 import { EcountApiModule } from './ecount-api/ecount-api.module';
+import { SpeettoModule } from './speetto/speetto.module';
 
 
 // bigInt 이슈
@@ -66,10 +67,13 @@ import { EcountApiModule } from './ecount-api/ecount-api.module';
     GroupUserModule,
     
           
-    GroupCompanyModule,
+    // GroupCompanyModule,
     
           
-    EcountApiModule,
+    // EcountApiModule,
+    
+          
+    SpeettoModule,
     
   ],
 

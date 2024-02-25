@@ -104,6 +104,13 @@ export const updateUserInfoSchema = {
         user_address: { type: 'string', default: '서울시 강남구 도곡동 271-1' },
     }
 }
+export const updateUserPointSchema = {
+    type: 'object',
+    properties: {
+        id: { type: 'number', default: 1 },
+        point: { type: 'number', default: 100000 },
+    }
+}
 
 export const insertCompanyInfoSchema = {
     type: 'object',
@@ -168,5 +175,4 @@ export const redisSchema = {
         required: false,
         default: 'key',
     },
-
 }

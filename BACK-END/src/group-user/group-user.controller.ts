@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Headers, Query } from '@nestjs/common';
 import { GroupUserService } from './group-user.service';
 import { JwtAuthGuard } from 'src/Auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiExcludeEndpoint, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { checkToken } from 'src/Auth/custom.function';
 import { JwtService } from '@nestjs/jwt';
-import { insertUserInfoSchema, listSchema, listSchemaGet, loginSchema, searchIdSchema, updateUserInfoSchema } from 'src/Auth/custom.body';
+import { insertUserInfoSchema, listSchema, listSchemaGet, loginSchema, searchIdSchema, updateUserInfoSchema, updateUserPointSchema } from 'src/Auth/custom.body';
 
 @ApiTags('사용자관리')
 @Controller('api')
@@ -16,6 +16,8 @@ export class GroupUserController {
 
 
   @Get('/createUserMany')
+  @ApiExcludeEndpoint()
+
   @ApiOperation({
     summary: '사용자 다량생성',
     description: ``,
@@ -92,7 +94,22 @@ export class GroupUserController {
     return await this.groupUserService.getUserInfoOne(params, loginUserInfo);
   }
 
+  @Get('/getMyInfo')
+  @UseGuards(JwtAuthGuard) // 토큰검증
+  @ApiBearerAuth('exjwtauthorization')
+  @ApiOperation({
+    summary: '나의정보열람',
+    description: ``,
+  })
+  async getMyInfo(@Query() params: any, @Headers('exjwtauthorization') token: any) {
+    const tokenStatus = await checkToken(token, this.jwtService)
+    if (tokenStatus.code != 200) { return tokenStatus }
+    const loginUserInfo = tokenStatus.loginUserInfo
+    return await this.groupUserService.getMyInfo(loginUserInfo);
+  }
+
   @Post('/delUserInfoCaching')
+  @ApiExcludeEndpoint()
   @UseGuards(JwtAuthGuard) // 토큰검증
   @ApiBearerAuth('exjwtauthorization')
   @ApiOperation({
@@ -145,8 +162,8 @@ export class GroupUserController {
   @ApiBody({
     schema: searchIdSchema
   })
-  async restoreUserInfo(@Body() params: any, @Headers() headers: any) {
-    const tokenStatus = await checkToken(headers.exjwtauthorization, this.jwtService)
+  async restoreUserInfo(@Body() params: any, @Headers('exjwtauthorization') token: any) {
+    const tokenStatus = await checkToken(token, this.jwtService)
     if (tokenStatus.code != 200) {
       return tokenStatus
     }
@@ -165,5 +182,35 @@ export class GroupUserController {
   })
   async updateUserInfo(@Body() params: any) {
     return await this.groupUserService.updateUserInfo(params);
+  }
+  @Post('/updateUserPoint')
+  @ApiOperation({
+    summary: '포인트충전',
+    description: ``,
+  })
+  @ApiBody({
+    schema: updateUserPointSchema
+  })
+  async updateUserPoint(@Body() params: any) {
+    return await this.groupUserService.updateUserPoint(params);
+  }
+
+  @Post('/updatePoint')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('exjwtauthorization')
+  @ApiOperation({
+    summary: '결과에 따라 포인트 추가/삭감',
+    description: ``,
+  })
+  @ApiBody({
+    schema: updateUserPointSchema
+  })
+  async updatePoint(@Body() params: any, @Headers('exjwtauthorization') token: any) {
+    const tokenStatus = await checkToken(token, this.jwtService)
+    if (tokenStatus.code != 200) {
+      return tokenStatus
+    }
+    const loginUserInfo = tokenStatus.loginUserInfo
+    return await this.groupUserService.updatePoint(params, loginUserInfo);
   }
 }

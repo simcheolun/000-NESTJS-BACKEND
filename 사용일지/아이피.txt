@@ -1,0 +1,5 @@
+ifconfig설치
+sudo apt install net-tools
+
+실행
+ifconfig

@@ -2,12 +2,16 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { SpeettoService } from './speetto.service';
 import { CreateSpeettoDto } from './dto/create-speetto.dto';
 import { UpdateSpeettoDto } from './dto/update-speetto.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/Auth/jwt-auth.guard';
+import { PukeService } from './puke.service';
+import { pukeSpito } from 'src/Auth/custom.body';
 
 @Controller('api')
 export class SpeettoController {
-  constructor(private readonly speettoService: SpeettoService) { }
+  constructor(
+    private readonly speettoService: SpeettoService,
+    private readonly PukeService: PukeService) { }
 
   @Post('/speetto')
   @UseGuards(JwtAuthGuard) // 토큰검증
@@ -32,4 +36,11 @@ export class SpeettoController {
     return { data, code: 200 }
   }
 
+  @Post('/redTen')
+  @UseGuards(JwtAuthGuard) // 토큰검증
+  @ApiBearerAuth('exjwtauthorization')
+  @ApiBody({ schema: pukeSpito.puke })
+  async redTen(@Body() data: any) {
+    return await this.PukeService.redTen(data.groups)
+  }
 }

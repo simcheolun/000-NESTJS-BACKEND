@@ -1,0 +1,218 @@
+#쇼유자 교체
+sudo chown -R car008:car008 /경로/폴더
+#실행파일권한
+chmod +x 파일이름.sh
+
+# 기본 암호설정
+sudo passwd su 
+
+ip addr
+    2  sudo apt-get update
+    3  sudo apt-get install ufw
+    4  sudo ufw enable
+    5  sudo ufw allow 80/tcp
+    6  sudo ufw allow 443/tcp
+    7  sudo ufw status
+    8  sudo apt install net-tools
+    9  ifconfig
+   10  sudo apt update
+   11  sudo apt install nginx
+   12  node -v
+   13  npm -v
+   14  sudo apt update
+   15  sudo apt install openssh-server
+   16  sudo systemctl enable ssh
+   17  sudo systemctl start ssh
+   18  sudo ufw status
+   19  sudo ufw allow 22/tcp
+   20  sudo ufw status
+   21  su -
+   22  sudo hh701026su - root
+   23  exit
+   24  cd /home/car008/work/008shop_api/
+   25  clear
+   26  npm install
+   27  npm run start:dev
+   28  ifconfig
+   29  sudo systemctl restart nginx
+   30  sudo ufw status
+   31  sudo systemctl restart nginx
+   32  cd ~/내 폴더
+   33  cd ~/내폴더
+   34  cd /home/car008/ssl
+   35  dir
+   36  clear
+   37  dir
+   38  sudo systemctl restart nginx
+   39  systemctl status nginx.service
+   40  ls -l /home/car008/ssl/_.008parts.co.kr__crt.pem
+   41  sudo systemctl restart nginx
+   42  systemctl status nginx.service
+   43  sudo systemctl restart nginx
+   44  sudo ufw status
+   45  sudo systemctl restart nginx
+   46  clear
+   47  nohup
+   48  sudo nano /home/car008/work/008shop_api/default
+   49  sudo nano default
+   50  ./shop_backend.sh
+   51  sudo nano shop_backend.sh
+   52  ./shop_backend.sh
+   53  chmod +x shop_backend.sh
+   54  sudo chmod +x shop_backend.sh
+   55  ./shop_backend.sh
+   56  git --version
+   57  /shop_backend.sh: 5: git: not found
+   58  sudo apt-get install git
+   59  echo $PATH
+   60  cd /home/car008/work/008shop_api/
+   61  npm run start:dev
+   62  clear
+   63  cd /home/car008/work/
+   64  clear
+   65  shop_backend.sh
+   66  ./shop_backend.sh
+   67  cls
+   68  clear
+   69  dir
+   70  sudo nano default
+   71  ls
+   72  cpu
+   73  lscpu
+   74  lsmemory
+   75  lsram
+   76  clear
+   77  free- h
+   78  free-h
+   79  free -h
+   80  sudo ufw status칟ㅁㄱ
+   81  ifconfig
+   82  sudo ufw status
+   83  sudo ufw allow 6379
+   84  sudo ufw status
+   85  sudo ufw reload
+   86  ipconfig
+   87  ifconfig
+   88  sudo ufw status
+   89  sudo nano /etc/nginx/sites-available/default
+   90  sudo service nginx restart\
+   91  cd /home/car008/work/
+   92  nohup npm run start 1> /dev/null 2>&1 &
+   93  ps -aux
+   94  cd 008shop_api
+   95  npm run start:dev
+   96  cd work
+   97  dir
+   98  cd test_api
+   99  npm run start:dev
+  100  su
+  101  cd work
+  102  clear
+  103  dir
+  104  sudo nano shop_backend.sh
+  105  ./web.sh
+  106  git
+  107  clear
+  108  cd test-web
+  109  cd test_web
+  110  yan run dev
+  111  yarn run dev
+  112  yarn run serve
+  113  yarn --v
+  114  yarn -version
+  115  yarn run serve
+  116  ps -aux
+  117  clear
+  118  systemctl restart nginx
+  119  sudo nano /etc/nginx/sites-available/default
+  120  systemctl restart nginx
+  121  sudo ufw status
+  122  sudo nano /etc/nginx/sites-available/default
+  123  sudo ufw status
+  124  systemctl restart nginx
+  125  ifconfig
+  126  sudo service nginx restartr
+  127  sudo service nginx restart
+  128  clar
+  129  clear
+  130  sudo nano /etc/nginx/sites-available/default
+  131  sudo service nginx restart
+  132  sudo nano /etc/nginx/sites-available/default
+  133  sudo service nginx restart
+  134  sudo nano /etc/nginx/sites-available/default
+  135  sudo service nginx restart
+  136  sudo nano /etc/nginx/sites-available/default
+  137  sudo ufw allow 19761/tcp
+  138  sudo nano /etc/nginx/sites-available/default
+  139  sudo service nginx restart
+  140  sudo nano /etc/nginx/sites-available/default
+  141  cd work
+  142  cd /home/car008/work/test_api/
+  143  rm -r /home/car008/work/test_api/node_modules/
+  144  npm install
+  145  npm run dev
+  146  npm run start:dev
+  147  cd /home/car008/work/test_api/
+  148  npm run start:dev
+  149  sudo nano /etc/nginx/sites-available/default
+  150  sudo service nginx restart
+  151  sudo nano /etc/nginx/sites-available/default
+  152  sudo service nginx restart
+  153  cd work
+  154  cd test_web
+  155  yarn run serve
+  156  sudo systemctl nginx restart
+  157  sudo service nginx restart
+  158  cd /home/car008/work/test_web/
+  159  yarn run serve
+  160  cd /home/car008/work/test_api/
+  161  npm i
+  162  npm run start:dev
+  163  sudo nano /etc/nginx/sites-available/default~
+  164  sudo nano /etc/nginx/sites-available/default
+  165  npm i
+  166  \npm i
+  167  clear
+  168  npm run start:dev
+  169  ls
+  170  cat /etc/redhat-release
+  171  cat /etc/lsb-release
+  172  uname -r
+  173  uname -a
+  174  ls
+  175  cd work/
+  176  ls
+  177  vim web.sh
+  178  :q
+  179  ls
+  180  vim web.sh
+  181  :q
+  182  vim
+  183  sudo apt install vim
+  184  sudo su
+  185  python
+  186  python3
+  187  pip
+  188  pip -version
+  189  pip
+  190  pip -v
+  191  pip -V
+  192  history
+  193  ls
+  194  source ~/.bashrc
+  195  sudo vi ~/.vimrc
+  196  sudo apt update && sudo apt upgrade
+  197  apt update && apt upgrade
+  198  apt install python3.10
+  199  sudo apt install python3.11
+  200  python
+  201  sudo su
+  202  ls
+  203  history
+  204  cd /etc/nginx/sites-available/
+  205  ls
+  206  vim default
+  207  ls
+  208  sudo su
+  209  exit
+  210  history

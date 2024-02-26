@@ -1,0 +1,33 @@
+﻿#디스설치
+sudo apt update
+sudo apt install redis-server
+
+
+레디스 구동 및 자동 실행 설정:
+sudo systemctl start redis-server
+sudo systemctl enable redis-server
+
+방화벽 설정 (UFW):
+sudo ufw allow 6379
+sudo ufw reload
+
+레디스 설정 파일 암호설정: # requirepass foobared    bind  0.0.0.0
+sudo nano /etc/redis/redis.conf
+
+접속
+redis-cli -h 192.168.0.7 -p 6379
+
+레디스 서버 재시작:
+sudo systemctl restart redis-server
+
+암호로 인증 테스트:
+redis-cli
+AUTH 나의암호   ## 인증이성공되면 ok를 받음.
+
+
+데이터저장 및 삭제
+radis-cli
+
+SET mykey "Hi~radis"
+GET mykey
+DEL mykey

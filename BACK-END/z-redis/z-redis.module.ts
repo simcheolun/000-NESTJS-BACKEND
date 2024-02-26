@@ -14,8 +14,6 @@ import { ZRedisController } from './z-redis.controller';
 import { JwtService } from '@nestjs/jwt';
 @Module({
   imports: [
-    // 레디스서버 구축해야함. 
-    // REDIS-CLI.EXE { 명령어 GET 캐싱키 }
     BaseCacheModule.registerAsync({
       useFactory: () => {
         return {

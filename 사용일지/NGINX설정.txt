@@ -1,0 +1,7 @@
+sudo apt update
+sudo apt install nginx
+
+
+sudo nano /etc/nginx/sites-available/default
+
+sudo service nginx restart

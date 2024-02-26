@@ -225,6 +225,7 @@ export async function checkToken(token: any, jwtService: any) {
 
 
 
+// 암호화
 const secret = 'simcheolun'
 import chalk from 'chalk';
 import * as crypto from 'crypto'
@@ -239,7 +240,7 @@ export function Encrypt(text: string): string {
   encrypted += cipher.final('hex')
   return iv.toString('hex') + encrypted
 }
-
+// 복호화
 export function Decrypt(encrypted: string): string {
   const encryptedBuffer = Buffer.from(encrypted, 'hex')
   const iv = encryptedBuffer.slice(0, 16)

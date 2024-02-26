@@ -1,0 +1,25 @@
+﻿방화벽설치
+sudo apt-get update
+sudo apt-get install ufw
+
+방화벽활성화
+sudo ufw enable
+
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 22/tcp
+
+아이피허용,차단
+sudo ufw allow from <IP_ADDRESS>
+sudo ufw deny from <IP_ADDRESS>
+
+포트허용,차단
+sudo ufw allow <PORT_NUMBER>/tcp
+sudo ufw deny <PORT_NUMBER>/tcp
+
+
+삭제
+sudo ufw delete allow 80/tcp
+
+방화벽상태 
+sudo ufw status

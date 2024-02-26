@@ -1,0 +1,8 @@
+sudo nano 파일명
+
+실행안될때
+sudo chmod +x shop_backend.sh
+
+
+
+sudo apt-get install git

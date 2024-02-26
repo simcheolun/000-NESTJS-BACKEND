@@ -176,3 +176,12 @@ export const redisSchema = {
         default: 'key',
     },
 }
+
+export const pukeSpito = {
+    puke: {
+        type: 'object',
+        properties: {
+            groups: { type: 'int', default: 2 },
+        }
+    }
+}

@@ -7,6 +7,7 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class JwtStrategyCar008 extends PassportStrategy(Strategy, 'car008') {
   constructor(private readonly configService: ConfigService) {
+    console.log(process.env.JWT_SECRET)
     super({ 
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.get<string>('JWT_SECRET'),

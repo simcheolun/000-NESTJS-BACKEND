@@ -6,12 +6,15 @@ import { ApiBearerAuth, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/Auth/jwt-auth.guard';
 import { PukeService } from './puke.service';
 import { pukeSpito } from 'src/Auth/custom.body';
+import { ErshiyidianService } from './ershiyidian.service';
 
 @Controller('api')
 export class SpeettoController {
   constructor(
     private readonly speettoService: SpeettoService,
-    private readonly PukeService: PukeService) { }
+    private readonly PukeService: PukeService,
+    private readonly ErshiyidianService: ErshiyidianService,
+    ) { }
 
   @Post('/speetto')
   @UseGuards(JwtAuthGuard) // 토큰검증
@@ -42,5 +45,13 @@ export class SpeettoController {
   @ApiBody({ schema: pukeSpito.puke })
   async redTen(@Body() data: any) {
     return await this.PukeService.redTen(data.groups)
+  }
+
+  @Post('/ershiyidian')
+  @UseGuards(JwtAuthGuard) // 토큰검증
+  @ApiBearerAuth('exjwtauthorization')
+  @ApiBody({ schema: pukeSpito.puke })
+  async ershiyidian(@Body() data: any) {
+    return this.ErshiyidianService.ErshiyiDian(2)
   }
 }

@@ -83,12 +83,15 @@ import { SpeettoModule } from './speetto/speetto.module';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
-    }
+    },
+    
   ],
 
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) { }
+  configure(consumer: MiddlewareConsumer) { 
+    console.log(process.env.JWT_SECRET)
+  }
 }
 
 

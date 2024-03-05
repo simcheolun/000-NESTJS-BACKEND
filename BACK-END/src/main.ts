@@ -9,6 +9,7 @@ import { swaggerOptions } from './swagger.config';
 import fastifyCompress from '@fastify/compress';
 import { join } from 'path';
 import * as fastify from 'fastify';
+import express from 'express';
 
 
 async function startServe() {
@@ -26,6 +27,7 @@ async function startServe() {
     root: staticFolderPath,
     prefix: '/upload',
   })
+  app.use(express.static(join(__dirname, '..','..', 'static')));
 
   app.register(fastifyCompress, {
     global: true,

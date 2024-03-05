@@ -58,6 +58,8 @@
     "sharp": "^0.32.6",
     "swagger-ui-express": "^4.6.3",
     "typeorm": "^0.3.15",
+    "@nestjs/websockets": "^8.0.0",
+    "@nestjs/platform-socket.io": "^8.0.0",
     "typeorm-naming-strategies": "^4.1.0"
   },
   "devDependencies": {

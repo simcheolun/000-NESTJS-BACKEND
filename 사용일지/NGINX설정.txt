@@ -5,3 +5,5 @@ sudo apt install nginx
 sudo nano /etc/nginx/sites-available/default
 
 sudo service nginx restart
+
+systemctl status nginx.service

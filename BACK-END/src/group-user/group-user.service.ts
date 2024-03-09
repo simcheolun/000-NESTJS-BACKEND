@@ -1,14 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GroupUserRepository, GroupUserRepositorySlave } from './group-user.repository';
-import { GroupUserEntitySlave } from './entities/group-user.entity';
-import { consolE, createSN, Decrypt, Encrypt, getpaginatedData, GroupUserInsert, GroupUserUpdate, returnDataList, returnDataSingle, returnJSONSingle, returnLoginData, returnMessage, getCachingData, setSubNode, getDataForId, getDataForKeyword, GroupUserPointUpdate } from 'src/Auth/custom.function';
+import { GroupUserRepository } from './group-user.repository';
+import { consolE, createSN, Decrypt, Encrypt, getpaginatedData, GroupUserInsert, GroupUserUpdate, returnJSONSingle, returnLoginData, returnMessage, getDataForId, getDataForKeyword, GroupUserPointUpdate, getData } from 'src/Auth/custom.function';
 import { hash } from 'bcrypt';
 import { ZRedisService } from 'z-redis/z-redis.service';
 import bcrypt from 'bcrypt'
 import { AuthService } from 'src/Auth/auth.service';
 import { messageSchema, statusCode } from 'src/Auth/custom.body';
-import { GroupCompanyRepositorySlave } from 'src/group-company/group-company.repository';
 
 @Injectable()
 export class GroupUserService {
@@ -17,9 +15,6 @@ export class GroupUserService {
     private readonly ZRedisService: ZRedisService,
     private readonly AuthService: AuthService,
     private GroupUserRepository: GroupUserRepository,
-    @InjectRepository(GroupUserEntitySlave, 'SLAVE')
-    private GroupUserRepositorySlave: GroupUserRepositorySlave,
-    private GroupCompanyRepositorySlave: GroupCompanyRepositorySlave,
   ) { }
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
             사용자 20만개 생성
@@ -63,72 +58,39 @@ export class GroupUserService {
            사용자 정보열람 []
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
   async getUserInfo(params: any, loginUserInfo: any) {
-    let caching = true
-
-    let cachingDataCompany = await getCachingData(
-      this.ZRedisService, process.env.REDIS_KEY_GORUP_COMPANY, this.GroupCompanyRepositorySlave)
-
-    let cachingDataUser: any = await getCachingData(
-      this.ZRedisService, this.REDIS_KEY, this.GroupUserRepositorySlave)
-
-    const { page = 1, size = 14, searchKeyword } = params
-
-    let filteredData = cachingDataUser;
-    if (searchKeyword) {
-      filteredData = await getDataForKeyword(cachingDataUser, ['user_name'], searchKeyword)
-    }
-
-    const { total, startIndex, endIndex, paginatedData } = await getpaginatedData(filteredData, page, size)
-    const resultData = await setSubNode(paginatedData, cachingDataCompany, 'company_info')
-    return returnDataList(resultData, total, page, size, caching)
+    // const ddd = (await this.GroupUserRepository.test(1))
+    //   .joinInfo('storage', 'id', 'id', 'storageInfo')
+    //   .joinInfo('company', 'company_id', 'id', 'companyInfo')
+    //   .joinInfo('home', 'home_id', 'id', 'homeInfo')
+    const resultdata = await this.GroupUserRepository.getUserInfo(params, loginUserInfo)
+    const { body, page, size } = resultdata
+    return resultdata
   }
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
            사용자 정보열람 {}
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
   async getMyInfo(loginUserInfo: any) {
     const myInfo = await this.GroupUserRepository.findOne({ where: { id: loginUserInfo.id } })
-    return returnDataSingle(myInfo, 200, true)
+    return getData(myInfo, true, 0, 1,)
   }
   async getUserInfoOne(params: any, loginUserInfo: any) {
-    let caching = true
-    let cachingData: any = await getCachingData(
-      this.ZRedisService, this.REDIS_KEY, this.GroupUserRepositorySlave)
-    const { id } = params
-    let filteredData = cachingData;
-    if (id) {
-      filteredData = getDataForId(cachingData, id)
-    }
-    return returnDataSingle(filteredData[0], 200, true)
+    const myInfo = await this.GroupUserRepository.findOne({ where: { id: loginUserInfo.id } })
+    return getData(myInfo, true, 0, 1,)
   }
 
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
              사용자 정보등록
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
   async insertUserInfo(data: any) {
-    let cachingData: any = await getCachingData(
-      this.ZRedisService, this.REDIS_KEY, this.GroupUserRepositorySlave)
-    if (cachingData) {
-      const findUser = cachingData.find((item: any) => item.login_id == data.login_id)
-      if (findUser) {
-        return returnJSONSingle(data, messageSchema.userFIND, statusCode.CANCEL, 400)
-      }
-    }
     // 암호생성
     data.hashedPassword = await hash(data.login_pw, 10)
     // 사용자 정보 삽입
     const newData = await this.GroupUserRepository.insert(GroupUserInsert(data))
     // 등록된 ID 추출
     data.id = newData.identifiers[0].id
-    // 캐싱 재 설정
-    if (!cachingData) {
-      cachingData = await this.GroupUserRepositorySlave.find()
-      await this.ZRedisService.setCaching(this.REDIS_KEY, cachingData)
-    } else {
-      cachingData.push(data)
-      await this.ZRedisService.setCaching(this.REDIS_KEY, cachingData)
-    }
+
     // 등록한 정보 반환
-    return returnDataSingle(data, 201, false)
+    return getData(data, true, 0, 1,)
   }
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
              사용자 정보갱신
@@ -137,11 +99,11 @@ export class GroupUserService {
     await this.GroupUserRepository.update({
       id: data.id
     }, GroupUserUpdate(data))
-    return returnDataSingle(data, 201, false)
+    return getData(data, true, 0, 1,)
   }
 
   async updatePoint(data: any, loginUserInfo: any) {
-    const currentInfo:any =  await this.GroupUserRepository.findOne({where:{id:loginUserInfo.id}})
+    const currentInfo: any = await this.GroupUserRepository.findOne({ where: { id: loginUserInfo.id } })
     switch (data.status) {
       case '1등': {
         currentInfo.point += 200000
@@ -168,31 +130,30 @@ export class GroupUserService {
         break;
       }
     }
-    console.log(currentInfo)
-    if(currentInfo.point <0 ){
+    if (currentInfo.point < 0) {
       currentInfo.point = 0
-      return returnJSONSingle(currentInfo,'충전후 이용하여주세요.','OK',400)
+      return returnJSONSingle(currentInfo, '충전후 이용하여주세요.', 'OK', 400)
     }
     await this.GroupUserRepository.update({
       id: currentInfo.id
     }, { point: currentInfo.point })
 
-    return returnDataSingle(currentInfo, 201, false)
+    return getData(currentInfo, true, 200, 400,)
   }
 
   async updateUserInfo_caching(data: any) {
     await this.GroupUserRepository.update({
       id: data.id
     }, GroupUserUpdate(data))
-    let cachingData = await this.GroupUserRepositorySlave.find()
+    let cachingData = await this.GroupUserRepository.find()
     await this.ZRedisService.setCaching(this.REDIS_KEY, cachingData)
-    return returnDataSingle(data, 201, false)
+    return getData(data, true, 200, 400,)
   }
   async updateUserPoint(data: any) {
     await this.GroupUserRepository.update({
       id: data.id
     }, GroupUserPointUpdate(data))
-    return returnDataSingle(data, 201, false)
+    return getData(data, false, 200, 400,)
   }
 
 
@@ -209,7 +170,7 @@ export class GroupUserService {
   async removeUserInfo(data: any) {
     const dataArrary = Array.isArray(data) ? data : [data];
     await this.GroupUserRepository.remove(dataArrary)
-    let cachingData = await this.GroupUserRepositorySlave.find()
+    let cachingData = await this.GroupUserRepository.find()
     await this.ZRedisService.setCaching(this.REDIS_KEY, cachingData)
     return returnMessage(messageSchema.processOK, 201, false)
   }
@@ -219,7 +180,7 @@ export class GroupUserService {
   async softRemoveUserInfo(data: any) {
     const dataArrary = Array.isArray(data) ? data : [data];
     const resultData = await this.GroupUserRepository.softRemove(dataArrary)
-    let cachingData = await this.GroupUserRepositorySlave.find()
+    let cachingData = await this.GroupUserRepository.find()
     await this.ZRedisService.setCaching(this.REDIS_KEY, cachingData)
     return returnMessage(messageSchema.processOK, 201, false)
   }
@@ -228,10 +189,10 @@ export class GroupUserService {
   #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# */
   async restoreUserInfo(data: any) {
     await this.GroupUserRepository.restore(data)
-    let cachingData = await this.GroupUserRepositorySlave.find()
+    let cachingData = await this.GroupUserRepository.find()
     await this.ZRedisService.setCaching(this.REDIS_KEY, cachingData)
     const returnData = cachingData.find((item: any) => item.id == data.id)
-    return returnDataSingle(returnData, 201, true)
+    return getData(returnData, true, 200, 400,)
   }
   /* #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# 
              로그인

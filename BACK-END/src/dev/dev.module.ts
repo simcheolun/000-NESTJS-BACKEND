@@ -2,17 +2,17 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from 'src/Auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ZRedisService } from 'z-redis/z-redis.service';
-import { EcountApiContoroller } from './ecount-api.controller';
-import { EcountApiService } from './ecount-api.service';
+import { DevController } from './dev.controller';
+import { DevService } from './dev.service';
 
 @Module({
   imports: [
     AuthModule,
   ],
-  controllers: [EcountApiContoroller],
+  controllers: [DevController],
   providers: [
     ZRedisService,
-    EcountApiService,
+    DevService,
   ]
 })
-export class EcountApiModule {}
+export class DevModule {}

@@ -4,9 +4,8 @@ import { GroupUserController } from './group-user.controller';
 import { AuthModule } from 'src/Auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GroupUserEntity, GroupUserEntitySlave } from './entities/group-user.entity';
-import { GroupUserRepository, GroupUserRepositorySlave } from './group-user.repository';
+import { GroupUserRepository } from './group-user.repository';
 import { ZRedisService } from 'z-redis/z-redis.service';
-import { GroupCompanyRepositorySlave } from 'src/group-company/group-company.repository';
 
 @Module({
   imports: [
@@ -19,8 +18,6 @@ import { GroupCompanyRepositorySlave } from 'src/group-company/group-company.rep
     ZRedisService,
     GroupUserService,
     GroupUserRepository,
-    GroupUserRepositorySlave,
-    GroupCompanyRepositorySlave,
   ]
 })
 export class GroupUserModule { }

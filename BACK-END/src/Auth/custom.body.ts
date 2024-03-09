@@ -172,7 +172,13 @@ export const redisSchema = {
     keyName: { // 0
         name: 'keyName',
         type: 'string',
-        required: false,
+        required: true,
+        default: 'key',
+    },
+    keyValue: { // 0
+        name: 'keyValue',
+        type: 'string',
+        required: true,
         default: 'key',
     },
 }

@@ -7,7 +7,7 @@ export const typeOrmConfig = (name: string): TypeOrmModuleOptions => ({
   username: process.env[`DATABASE_USERNAME_${name.toUpperCase()}`],
   password: process.env[`DATABASE_PASSWORD_${name.toUpperCase()}`],
   // database: process.env[`DATABASE_NAME_${name.toUpperCase()}`],
-  synchronize: false,
+  synchronize: false, //  true사용금지
   logging: true,
   extra: {
     supportBigNumbers: true,

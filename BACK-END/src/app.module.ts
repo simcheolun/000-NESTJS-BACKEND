@@ -16,9 +16,8 @@ import { typeOrmConfig } from './Auth/typeorm.config';
 
 import { ZRedisModule } from 'z-redis/z-redis.module';
 import { GroupUserModule } from './group-user/group-user.module';
-import { GroupCompanyModule } from './group-company/group-company.module';
-import { EcountApiModule } from './ecount-api/ecount-api.module';
 import { SpeettoModule } from './speetto/speetto.module';
+import { DevModule } from './dev/dev.module';
 
 
 // bigInt 이슈
@@ -58,22 +57,16 @@ import { SpeettoModule } from './speetto/speetto.module';
     }),
 
     
+    DevModule,
 
 
     // 각 모듈 주입  
     ZRedisModule,
     
-          
     GroupUserModule,
     
-          
-    // GroupCompanyModule,
-    
-          
-    // EcountApiModule,
-    
-          
     SpeettoModule,
+    
     
   ],
 

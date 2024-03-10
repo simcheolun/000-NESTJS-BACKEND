@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DevRepository } from './dev.repository';
 import { ZRedisService } from 'z-redis/z-redis.service';
 import { salesProductInfoEntity } from 'src/group-user/entities/sales-product-info.entity';
+import { MallService } from './mall.service';
+import { CompanyInfoRepository, StorageInfoRepository, salesProducInfotRepository } from 'src/group-user/mall.repository';
 
 @Module({
   imports: [
@@ -18,6 +20,11 @@ import { salesProductInfoEntity } from 'src/group-user/entities/sales-product-in
     ZRedisService,
     DevService,
     DevRepository,
+
+    MallService,
+    salesProducInfotRepository,
+    CompanyInfoRepository,
+    StorageInfoRepository,
   ]
 })
 export class DevModule { }

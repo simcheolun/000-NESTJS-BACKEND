@@ -5,20 +5,58 @@ import {
     getData,
     returnMessage,
 } from 'src/Auth/custom.function';
-import { salesProductInfoEntity } from './entities/sales-product-info.entity';
+import { CompanyInfoEntity, StorageInfoEntity, salesProductInfoEntity } from './entities/sales-product-info.entity';
 @Injectable()
-export class groupUserRepository extends Repository<salesProductInfoEntity>{
+export class salesProducInfotRepository extends Repository<salesProductInfoEntity>{
     constructor(
         private dataSource: DataSource,
     ) {
         super(salesProductInfoEntity, dataSource.createEntityManager());
     }
-    async getgroupUserRepository(params: any, loginUserInfo: any) {
+    async getSalesProductInfo(params: any, loginUserInfo: any) {
         const { size, page, searchKeyword } = params
         const TABLENAME = 'sales_product_info'
         let queryBuilder = this.createQueryBuilder(TABLENAME)
             .select(TABLENAME)
-            .orderBy(TABLENAME, 'ASC')
+            .orderBy(`${TABLENAME}.seq`, 'ASC')
+        const data = await queryBuilder.getMany()
+        const result = await getpaginatedData(data, page, size, ['deleteAt'])
+        return result
+    }
+}
+
+@Injectable()
+export class CompanyInfoRepository extends Repository<CompanyInfoEntity>{
+    constructor(
+        private dataSource: DataSource,
+    ) {
+        super(CompanyInfoEntity, dataSource.createEntityManager());
+    }
+    async getCompanyInfo(params: any, loginUserInfo: any) {
+        const { size, page, searchKeyword } = params
+        const TABLENAME = 'company_info'
+        let queryBuilder = this.createQueryBuilder(TABLENAME)
+            .select(TABLENAME)
+            .orderBy(`${TABLENAME}.seq`, 'ASC')
+        const data = await queryBuilder.getMany()
+        const result = await getpaginatedData(data, page, size, ['deleteAt'])
+        return result
+    }
+}
+
+@Injectable()
+export class StorageInfoRepository extends Repository<StorageInfoEntity>{
+    constructor(
+        private dataSource: DataSource,
+    ) {
+        super(StorageInfoEntity, dataSource.createEntityManager());
+    }
+    async getStorageInfo(params: any, loginUserInfo: any) {
+        const { size, page, searchKeyword } = params
+        const TABLENAME = 'storage_info'
+        let queryBuilder = this.createQueryBuilder(TABLENAME)
+            .select(TABLENAME)
+            .orderBy(`${TABLENAME}.seq`, 'ASC')
         const data = await queryBuilder.getMany()
         const result = await getpaginatedData(data, page, size, ['deleteAt'])
         return result

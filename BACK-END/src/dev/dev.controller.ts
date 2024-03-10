@@ -3,25 +3,17 @@ import { DevService } from './dev.service';
 import { ApiBearerAuth, ApiExcludeEndpoint, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/Auth/jwt-auth.guard';
 import { NESTJSproject, redisSchema } from 'src/Auth/custom.body';
+import { MallService } from './mall.service';
 
 @ApiTags('테스트')
 @Controller('dev')
 export class DevController {
-  constructor(private readonly devService: DevService) {}
+  constructor(
+    private readonly devService: DevService,
+    private readonly MallService:MallService
+    ) {}
 
-  @Post('/getTest')
-  // @ApiExcludeEndpoint()
-  @UseGuards(JwtAuthGuard) // 토큰검증
-  @ApiBearerAuth('exjwtauthorization')
-  @ApiOperation({
-    summary: '테스트',
-    description: ``,
-  })
-  async getTest(@Headers() headers: any) {
-    return await this.devService.getTest();
-  }
-
-  // --------------------------------------------------------
+   // --------------------------------------------------------
   @Get('/createNESTJSproject')
   @UseGuards(JwtAuthGuard) // 토큰검증
   @ApiBearerAuth('exjwtauthorization')
@@ -37,4 +29,20 @@ export class DevController {
   async getUserInfoOne(@Query() params: any) {
     return this.devService.convertToTypeScript(params);
   }
+
+   // --------------------------------------------------------
+  @Post('/getTest')
+  // @ApiExcludeEndpoint()
+  @UseGuards(JwtAuthGuard) // 토큰검증
+  @ApiBearerAuth('exjwtauthorization')
+  @ApiOperation({
+    summary: '테스트',
+    description: ``,
+  })
+  async getTest(@Headers() headers: any) {
+    return await this.MallService.getSalesProductInfo();
+  }
+
 }
+
+

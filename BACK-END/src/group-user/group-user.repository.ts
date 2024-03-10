@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { consolE, getpaginatedData, returnJSONList } from 'src/Auth/custom.function';
 import { GroupUserEntity, GroupUserEntitySlave } from './entities/group-user.entity';
 
+
 @Injectable()
 export class GroupUserRepository extends Repository<GroupUserEntity>{
     constructor(

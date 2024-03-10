@@ -3,7 +3,23 @@
 // 400 실패
 // 401 인증안됨
 
+// data_name_seq => dataNameSeq
+export function fieldToSimple(item: any) {
+  const pattern = /\({[\s\S]*?name: '(\w+)'[\s\S]*?}\)\s*(\w+):/;
+  const [, columnName, propertyName] = item.match(pattern);
+  const camelPropertyName = propertyName.replace(/_(\w)/g, (match: any, p1: any) => p1.toUpperCase());
+  return item.replace(new RegExp(columnName + ':'), camelPropertyName + ':');
+}
+export function stringToSimple(item: any) {
+  return item.replace(/_(\w)/g, (match: any, p1: any) => p1.toUpperCase());
+}
 
+export function stringToSimple_(item: any) {
+  return item.replace(/-(\w)/g, (match: any, p1: any) => p1.toUpperCase());
+}
+export function firstToUpper(item: any) {
+  return item.charAt(0).toUpperCase() + item.slice(1);
+}
 // 일련번호생성
 export function createSN(): any {
   const date = new Date()
@@ -72,7 +88,7 @@ export async function getpaginatedData(list: any[], page: number, size: number, 
   }
 }
 
-export function getData(results: any, IsUD: boolean, OKmessageCode: number,FAmessageCode:number) {
+export function getData(results: any, IsUD: boolean, OKmessageCode: number, FAmessageCode: number) {
   const messages = [
     { id: 0, message: '요청이 반영되었습니다.' },
     { id: 1, message: '검색된 정보가 없습니다.' },
@@ -80,10 +96,10 @@ export function getData(results: any, IsUD: boolean, OKmessageCode: number,FAmes
   ]
   let OKmessage = messages[0]
   let FAmessage = messages[1]
-  if(OKmessageCode){
+  if (OKmessageCode) {
     OKmessage = messages[OKmessageCode]
   }
-  if(FAmessageCode){
+  if (FAmessageCode) {
     FAmessage = messages[FAmessageCode]
   }
 

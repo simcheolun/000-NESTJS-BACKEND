@@ -15,7 +15,6 @@ export class ZRedisService {
     async getCaching(key: string) {
         try {
             const data = await this.cacheManager.get(key);
-            console.log('aaaaaaaaaaaaaaaaaaaa',JSON.stringify(data))
             return data;
         } catch (error) {
             console.error('Z-REDIS.SERVICE.TS: error while getting data', error);

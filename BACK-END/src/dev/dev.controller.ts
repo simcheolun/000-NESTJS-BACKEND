@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Headers, Query } from '@nestjs/common';
 import { DevService } from './dev.service';
-import { ApiBearerAuth, ApiExcludeEndpoint, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiExcludeEndpoint, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/Auth/jwt-auth.guard';
+import { NESTJSproject, redisSchema } from 'src/Auth/custom.body';
 
 @ApiTags('테스트')
 @Controller('dev')
@@ -17,7 +18,23 @@ export class DevController {
     description: ``,
   })
   async getTest(@Headers() headers: any) {
-
     return await this.devService.getTest();
+  }
+
+  // --------------------------------------------------------
+  @Get('/createNESTJSproject')
+  @UseGuards(JwtAuthGuard) // 토큰검증
+  @ApiBearerAuth('exjwtauthorization')
+  @ApiOperation({
+    summary: '엔티티,리퍼지토리,서비스,컨트롤러 생성',
+    description: ``,
+  })
+  @ApiQuery(NESTJSproject.Entity)
+  @ApiQuery(NESTJSproject.projectName)
+  @ApiQuery(NESTJSproject.database)
+  @ApiQuery(NESTJSproject.schema)
+  @ApiQuery(NESTJSproject.table)
+  async getUserInfoOne(@Query() params: any) {
+    return this.devService.convertToTypeScript(params);
   }
 }

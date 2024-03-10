@@ -191,3 +191,37 @@ export const pukeSpito = {
         }
     }
 }
+
+
+export const NESTJSproject = {
+    Entity: {
+        name: 'entity',
+        type: 'string',
+        required: true,
+        default: null,
+    },
+    projectName: {
+        name: 'projectName',
+        type: 'string',
+        required: true,
+        default: null,
+    },
+    database: {
+        name: 'database',
+        type: 'string',
+        required: true,
+        default: null,
+    },
+    schema: {
+        name: 'schema',
+        type: 'string',
+        required: true,
+        default: 'MASTER',
+    },
+    table: {
+        name: 'table',
+        type: 'string',
+        required: true,
+        default: null,
+    },
+}

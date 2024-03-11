@@ -1,3 +1,15 @@
+새로운 디스크추가 및 포맷
+sudo fdisk /dev/sdb
+sudo mkfs.ext4 /dev/sdb1
+
+sudo mkdir /mnt/new_disk
+sudo mount /dev/sdb1 /mnt/new_disk
+
+sudo mount /dev/sdb1 /mnt/new_disk
+
+폴더삭제
+rm -rf node_modules
+
 #쇼유자 교체
 sudo chown -R car008:car008 /경로/폴더
 #실행파일권한

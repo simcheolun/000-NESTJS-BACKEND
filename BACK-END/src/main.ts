@@ -49,30 +49,34 @@ async function startServe() {
 }
 startServe();
 
-
 /*
-APP.MODULE.TS
-TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService) => typeOrmConfig('MASTER'),
-      inject: [ConfigService],
-    }),
-    // 다중Database연결
-    TypeOrmModule.forRootAsync({
-      name: 'SLAVE', // 이름 지정
-      useFactory: (configService: ConfigService) => typeOrmConfig('SLAVE'),
-      inject: [ConfigService],
-    }),
+레디스 열람
+await getCachingData(this.ZRedisService, this.REDIS_KEY, this.GroupUserRepositorySlave)
+레디스 설정
+await redisService.setCaching(redisKey, cachingData)
 
-TABLE SERVICE
-constructor(...){
-//추가부분 매개 리퍼지토리상부에  엔티티 추가
-   @InjectRepository(AccountInfoEntityMaster)
-    private AccountInfoRepositoryMaster: AccountInfoRepositoryMaster,
-  @InjectRepository(AccountInfoEntitySlave, 'SLAVE')
-    private AccountInfoRepositorySlave: AccountInfoRepositorySlave,
-}
+슬레이브 설정 service.ts
+@InjectRepository(엔티티, 'SLAVE')
+private 리퍼지토리명칭: 리퍼지토리,
 
-다중디비 리퍼지토리 주입시 해당 엔티티도 모듈에서 주입
-    TypeOrmModule.forFeature([EcountNoSendOtherEntity],'OTHER'),
+슬레이브 설정 repository.ts
+@Injectable()
+export class 리퍼지토리명칭 extends Repository<메인엔티티>{
+    constructor(
+        private dataSource: DataSource,
+    ) {
+        super(메인엔티티, dataSource.createEntityManager());
+    }
+    ... 각종함수
+  }
+@Injectable()
+export class 리퍼지토리명칭 extends Repository<슬라이브엔티티>{
+    constructor(
+        private dataSource: DataSource,
+    ) {
+        super(슬라이브엔티티, dataSource.createEntityManager());
+    }
+    ... 함수필요없음
+  }
 
 */

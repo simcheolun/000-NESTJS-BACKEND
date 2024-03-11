@@ -172,7 +172,13 @@ export const redisSchema = {
     keyName: { // 0
         name: 'keyName',
         type: 'string',
-        required: false,
+        required: true,
+        default: 'key',
+    },
+    keyValue: { // 0
+        name: 'keyValue',
+        type: 'string',
+        required: true,
         default: 'key',
     },
 }
@@ -184,4 +190,38 @@ export const pukeSpito = {
             groups: { type: 'int', default: 2 },
         }
     }
+}
+
+
+export const NESTJSproject = {
+    Entity: {
+        name: 'entity',
+        type: 'string',
+        required: true,
+        default: null,
+    },
+    projectName: {
+        name: 'projectName',
+        type: 'string',
+        required: true,
+        default: null,
+    },
+    database: {
+        name: 'database',
+        type: 'string',
+        required: true,
+        default: null,
+    },
+    schema: {
+        name: 'schema',
+        type: 'string',
+        required: true,
+        default: 'MASTER',
+    },
+    table: {
+        name: 'table',
+        type: 'string',
+        required: true,
+        default: null,
+    },
 }

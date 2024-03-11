@@ -3,7 +3,23 @@
 // 400 실패
 // 401 인증안됨
 
+// data_name_seq => dataNameSeq
+export function fieldToSimple(item: any) {
+  const pattern = /\({[\s\S]*?name: '(\w+)'[\s\S]*?}\)\s*(\w+):/;
+  const [, columnName, propertyName] = item.match(pattern);
+  const camelPropertyName = propertyName.replace(/_(\w)/g, (match: any, p1: any) => p1.toUpperCase());
+  return item.replace(new RegExp(columnName + ':'), camelPropertyName + ':');
+}
+export function stringToSimple(item: any) {
+  return item.replace(/_(\w)/g, (match: any, p1: any) => p1.toUpperCase());
+}
 
+export function stringToSimple_(item: any) {
+  return item.replace(/-(\w)/g, (match: any, p1: any) => p1.toUpperCase());
+}
+export function firstToUpper(item: any) {
+  return item.charAt(0).toUpperCase() + item.slice(1);
+}
 // 일련번호생성
 export function createSN(): any {
   const date = new Date()
@@ -39,32 +55,67 @@ export function getYYYYMMDD(): string {
 }
 
 
-// 페이지분할
-export async function getpaginatedData(list: any[], page: any, size: any) {
-  const total = list.length
-  const startIndex = (page - 1) * size
-  const endIndex = startIndex + size
-  const paginatedData = list.slice(startIndex, endIndex)
-  return { total, startIndex, endIndex, paginatedData }
+// 페이지분할 사용
+export async function getpaginatedData(list: any[], page: number, size: number, hideFields: any[]) {
+  page = Number(page)
+  size = Number(size)
+  const totalCount = list.length
+  const offset = (page - 1) * size
+  const endIndex = offset + size
+  let data = list.slice(offset, endIndex)
+  data = data.map(item => {
+    for (const field of hideFields) {
+      delete item[field];
+    }
+    return item;
+  });
+  const total = data.length
+  const empty = !total
+  return {
+    body: {
+      empty,
+      offset,
+      results: data,
+      total,
+      imit: size,
+    },
+    totalCount,
+    page,
+    size,
+    statusCode: total ? 'successs' : 'faild',
+    code: total ? 200 : 400,
+    message: total ? '요청이 반영되었습니다.' : '정보가 없습니다.'
+  }
 }
 
-// 배열> 회사정보 삽입
-export async function setSubNode(parentList: any[], companyList: any[],keyName:string) {
-  parentList.map((item: any) => {
-    item[keyName] = companyList.find((subItem: any) => {
-      return subItem.id == item.company_id
-    })
-  })
-  return parentList
+export function getData(results: any, IsUD: boolean, OKmessageCode: number, FAmessageCode: number) {
+  const messages = [
+    { id: 0, message: '요청이 반영되었습니다.' },
+    { id: 1, message: '검색된 정보가 없습니다.' },
+    { id: 2, message: '충전후 이용하여주세요.' },
+  ]
+  let OKmessage = messages[0]
+  let FAmessage = messages[1]
+  if (OKmessageCode) {
+    OKmessage = messages[OKmessageCode]
+  }
+  if (FAmessageCode) {
+    FAmessage = messages[FAmessageCode]
+  }
+
+  let code = 200
+  if (IsUD) { code = 201 }
+  return {
+    body: {
+      empty: results ? false : true,
+      results: results ? results : null,
+    },
+    message: results ? OKmessage : FAmessage,
+    statusCode: results ? 'success' : 'fild',
+    code: results ? code : 400,
+  }
 }
 
-// 낱개> 회사정보 삽입
-export async function setSubNodeSingle(data: any, companyList: any[],keyName:string) {
-  data[keyName] = companyList.find((subItem: any) => {
-    return subItem.id == data.company_id
-  })
-  return data
-}
 
 // 정보 필터링{}
 export async function getDataForId(data: any, id: number) {
@@ -83,15 +134,6 @@ export async function getDataForKeyword(data: any, keyName: any[], searchKeyword
   });
 }
 
-// 캐싱데이터 가져오기, 없으면 캐싱생성 
-export async function getCachingData(redisService: any, redisKey: any, reposioty: any) {
-  let cachingData = await redisService.getCaching(redisKey)
-  if (!cachingData) {
-    cachingData = await reposioty.find()
-    await redisService.setCaching(redisKey, cachingData)
-  }
-  return cachingData
-}
 
 export function returnMessage(message: any, code: number, caching: boolean) {
   return {
@@ -101,42 +143,7 @@ export function returnMessage(message: any, code: number, caching: boolean) {
     statusCode: code == 200 || code == 201 ? 'OK' : 'CANCEL'
   }
 }
-export function returnDataSingle(results: any, code: number, caching: boolean) {
-  return {
-    body: {
-      results: results ? results : null,
-    },
-    caching,
-    message: results ? '요청이 반영되었습니다.' : '검색된 정보가 없습니다.',
-    statusCode: results ? 'OK' : 'CANCEL',
-    code,
-  }
-}
 
-export function returnDataList(results: any, total: number, page: number, size: number, caching: boolean) {
-  const totalPage = Math.ceil(total / size)
-  const startIndex = (page - 1) * size
-  const endIndex = startIndex + size
-  let statusCode = 'OK'
-  if (!results.length) {
-    statusCode = 'CANCEL'
-  }
-  return {
-    page: Number(page),
-    totalPage,
-    body: {
-      empty: results.length ? false : true,
-      offset: startIndex,
-      limit: Number(size),
-      results,
-      total,
-    },
-    caching,
-    message: results.length ? '요청이 반영되었습니다.' : '검색 된 정보가 없습니다.',
-    statusCode,
-    code: results.length ? 200 : 400
-  }
-}
 export function returnLoginData(results: any, message: any, code: number, caching: boolean) {
   let statusCode = 'OK'
   if (code == 400) {

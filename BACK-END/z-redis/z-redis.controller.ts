@@ -34,4 +34,15 @@ export class ZRedisController {
   async getCaching(@Query() params: any) {
     return await this.ZRedisService.getCaching(params.keyName);
   }
+
+  @Get('/setCaching')
+  @ApiOperation({
+    summary: '캐싱 설정',
+    description: ``,
+  })
+  @ApiQuery(redisSchema.keyName)
+  @ApiQuery(redisSchema.keyValue)
+  async setCaching(@Query() params: any) {
+    return await this.ZRedisService.setCaching(params.keyName,params.keyValue);
+  }
 }

@@ -1,0 +1,19 @@
+
+
+sudo apt update
+sudo apt install git
+
+
+오른쪽 상단의 프로필 사진을 클릭하고, "Settings"을 선택
+
+"Settings" 페이지에서 왼쪽 사이드바에서 "Developer settings" 
+
+"Developer settings" 아래에 있는 "Personal access tokens"
+
+git clone https://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@github.com/simcheolun/vue-blog.git
+
+git branch -M main
+
+git pull origin main
+
+git push origin main

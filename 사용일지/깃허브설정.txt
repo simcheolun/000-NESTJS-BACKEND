@@ -10,10 +10,17 @@ sudo apt install git
 
 "Developer settings" 아래에 있는 "Personal access tokens"
 
-git clone https://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@github.com/simcheolun/vue-blog.git
+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
+
+git clone https://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@github.com/simcheolun/vue-blog.git
 
 git branch -M main
 
 git pull origin main
 
 git push origin main
+
+
+
+폴더 권한
+sudo chown -R car008:car008 /mnt/new_disk/shopnew/

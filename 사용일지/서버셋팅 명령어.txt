@@ -1,3 +1,10 @@
+모든정보를 상위폴더로 복사
+cp -r * ..
+cp -a * .. // 모든 파일 감춰진파일도포함
+
+현재 폴더내정보전부삭제
+rm -r *
+
 새로운 디스크추가 및 포맷
 sudo fdisk /dev/sdb
 sudo mkfs.ext4 /dev/sdb1
@@ -7,8 +14,10 @@ sudo mount /dev/sdb1 /mnt/new_disk
 
 sudo mount /dev/sdb1 /mnt/new_disk
 
-폴더삭제
+폴더 삭제
 rm -rf node_modules
+파일삭제 
+rm 파일명
 
 #쇼유자 교체
 sudo chown -R car008:car008 /경로/폴더

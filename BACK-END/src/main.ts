@@ -49,7 +49,18 @@ async function startServe() {
 }
 startServe();
 
+/* 스케쥴설정
+
+npm install --save @nestjs/schedule
+
+************app.module.ts
+  ScheduleModule.forRoot(), //스케쥴
+************ 서비스파일.ts
+@Cron('* /1 * * * * *') // 초
+async ecount() { 실행하는 코드 }
 /*
+
+
 레디스 열람
 await getCachingData(this.ZRedisService, this.REDIS_KEY, this.GroupUserRepositorySlave)
 레디스 설정
